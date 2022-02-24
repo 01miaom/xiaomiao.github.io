@@ -5,7 +5,7 @@
 <h1>我的第一个 Web 页面</h1>
 
 <p>我的第一个段落。</p>
-<button type="button" class="btn btn-primary" onclick="myloadfile()">file</button>
+<button type="button" class="btn btn-primary" onclick="savefile()">file</button>
 
 <button onclick="myFunction()">点我</button>
 
@@ -15,7 +15,15 @@ function myloadfile() {
     fetch('./www/file.txt')
     .then(res => res.text())
     .then(txt => console.log(txt))
-}    
+}  
+
+function savefile() {
+  fetch('www/file.txt', {
+      method: 'PUT',
+      body: "test"  
+  });  
+    console.log("a");
+}
     
 function myFunction() {
     document.write(Date());
