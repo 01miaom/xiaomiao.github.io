@@ -12,7 +12,7 @@
 <script>
 function myloadfile() {
     console.log("a");
-    fetch('www/file.txt')
+    fetch('./www/file.txt')
     .then(res => res.text())
     .then(txt => console.log(txt))
 }    
