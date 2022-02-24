@@ -1,36 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>{{ name }}'s Watchlist</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/paper.css') }}" type="text/css">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/data/styles.css') }}" type="text/css">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/files/styles.css') }}" type="text/css">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/axure_rp_page.css') }}" type="text/css">
-</head>
+<html>
 <body>
-<div class="snow-container">
-<div class="s">
-  <div class="snow foreground"></div>
-  <div class="snow foreground layered"></div>
-  <div class="snow middleground"></div>
-  <div class="snow middleground layered"></div>
-  <div class="snow background"></div>
-  <div class="snow background layered"></div>
-</div>
-</div>
 
+<h1>我的第一个 Web 页面</h1>
 
-    <p>{{ movies|length }} Titles</p>
-    <ul class="movie-list">
-        {% for movie in movies %}  {# 迭代 movies 变量 #}
-        <li>{{ movie.title }} - {{ movie.year }}</li>  {# 等同于 movie['title'] #}
-        {% endfor %}  {# 使用 endfor 标签结束 for 语句 #}
-    </ul>
-    <footer>
-        <small>© 2018 <a href="/">HelloFlaska></small>
- </footer>
-    <img alt="Walking Totoro" class="totoro" src="{{ url_for('static', filename='images/totoro.gif')}}">
-</div>
+<p>我的第一个段落。</p>
+
+<button onclick="myFunction()">点我</button>
+
+<script>
+function myFunction() {
+    document.write(Date());
+}
+</script>
+
+</body>
+</html>
 </body>
 </html>
