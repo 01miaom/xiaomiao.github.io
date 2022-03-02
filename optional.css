@@ -201,6 +201,8 @@ body {background-color: #333 !important; color:aliceblue}
 
 
 @media (prefers-color-scheme: light) {
+}
+
 body {background-color: #333 !important; color:aliceblue}
     
 
@@ -220,4 +222,3 @@ body {background-color: #333 !important; color:aliceblue}
 	background: #212122;
 }
 	
-}
