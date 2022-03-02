@@ -175,27 +175,11 @@ section {
      text-shadow: 0 0 10px #FF1493, 0 0 5px #6bf403; 
 }
 
-#main_menu #sub_menu{
-    max-height: 0px;
-    background-color:antiquewhite;
-    transition: max-height 0.25s ease-out;
-    overflow: hidden;
-}
-
-#main_menu:hover #sub_menu{
-    max-height: 200px;
-}
 
 
 @media (prefers-color-scheme: dark) {
 body {background-color: #333 !important; color:aliceblue}
     
-#main_menu #sub_menu{
-    max-height: 0px;
-    background-color: #212122;
-    transition: max-height 0.25s ease-out;
-    overflow: hidden;
-}
 
 #about {
 	background: #212122;
@@ -217,4 +201,23 @@ body {background-color: #333 !important; color:aliceblue}
 
 
 @media (prefers-color-scheme: light) {
+body {background-color: #333 !important; color:aliceblue}
+    
+
+#about {
+	background: #212122;
+}
+
+#blogs {
+	background: #212122;
+}
+
+#links {
+	background: #212122;
+}
+    
+#rwd {
+	background: #212122;
+}
+	
 }
