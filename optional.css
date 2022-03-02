@@ -1,0 +1,220 @@
+body {
+    margin: auto;
+    font-size: 14px;
+	font-family: 'Economica', sans-serif;
+}
+
+header {
+	text-align: center;
+	padding: 3em;
+	background-image: url('./www/header.jpeg');
+	background-size: cover;
+	background-position: center;
+    font-size: 18px;
+	color: White;
+}
+
+header h1 {
+	font-weight: normal;
+}
+
+header h1 span {
+	font-weight: bold;
+}
+
+section {
+	margin: 2em;
+	padding: 2em;
+	border-radius: 10px;
+}
+
+section h2 {
+  font-variant: small-caps;
+	text-align: left;
+}
+
+nav {
+	text-align: center;
+}
+
+nav ul {
+	padding: 0;
+}
+
+nav li {
+	display: inline-block;
+	width: 20%;
+}
+
+nav a:link {
+	text-decoration: none;
+}
+
+nav a:hover {
+	font-weight: bold;
+	color: darkgreen;
+}
+
+#about {
+	background: lightgreen;
+}
+
+#about img {
+    width:150px;
+    height:100px;
+    float: right;
+    border-radius: 5px;
+}
+
+.flex-container {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.flex-container > div {
+	width: 8em;
+	height: 4em;
+	background: grey;
+	margin: 1em;
+	text-align: center;
+	line-height: 4em;
+	color: white;
+  border-radius: 4px;
+}
+
+.flex-container > div:hover {
+    background: lightgreen;
+}
+
+#blogs {
+	background: lightsteelblue;
+}
+
+#blogs table {
+	border-collapse: collapse;
+	width: 80%;
+	text-align: center;
+	margin: 2em;
+}
+
+#blogs th, td {
+	padding: 1em;
+	border-bottom: 1px solid #ccc;
+}
+
+#blogs tr:hover {
+	background: lightskyblue;
+}
+
+#links {
+	background: #deb887;
+}
+
+#links a:link {
+	text-decoration: none;
+}
+
+#links a:hover {
+	font-style: italic;
+}
+
+#rwd {
+	background: lightgrey;
+}
+
+
+footer {
+    color: #888;
+    margin-top: 15px;
+    top: 350px;
+    text-align: center;
+    padding: 10px;
+}
+
+div {
+    display: inline;
+}
+
+
+@media screen and (max-width: 600px) {   
+
+nav li {
+	padding: 0;
+	width: 16px;
+    display: inline-block;
+	width: 20%;
+}
+
+
+section {
+	margin: 0;
+	padding: 1em;
+	border-radius: 0;
+}
+    
+#about img {
+	min-width: 90%;
+	height: auto;
+	display: block;
+	margin: auto;
+    float: none;
+}
+
+#about .flex-container div {
+	margin: 3px;
+}
+
+#blogs table {
+	width: 100%;
+	margin: 0;
+}
+  
+}
+
+.head1{
+     text-shadow: 0 0 10px #FF1493, 0 0 5px #6bf403; 
+}
+
+#main_menu #sub_menu{
+    max-height: 0px;
+    background-color:antiquewhite;
+    transition: max-height 0.25s ease-out;
+    overflow: hidden;
+}
+
+#main_menu:hover #sub_menu{
+    max-height: 200px;
+}
+
+
+@media (prefers-color-scheme: dark) {
+body {background-color: #333 !important; color:aliceblue}
+    
+#main_menu #sub_menu{
+    max-height: 0px;
+    background-color: #212122;
+    transition: max-height 0.25s ease-out;
+    overflow: hidden;
+}
+
+#about {
+	background: #212122;
+}
+
+#blogs {
+	background: #212122;
+}
+
+#links {
+	background: #212122;
+}
+    
+#rwd {
+	background: #212122;
+}
+    
+}
+
+
+@media (prefers-color-scheme: light) {
+}
