@@ -254,6 +254,12 @@ body {background-color: #333 !important; color:aliceblue}
     display: none;
 }
 
-. gt-container .gt-comment-content {
+.gt-container .gt-comment-content {
     margin: 5px; 
 }
+
+.gt-container .gt-btn-preview{
+    display: none;
+}
+
+
