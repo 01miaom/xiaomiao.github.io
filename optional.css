@@ -268,3 +268,8 @@ body {background-color: #333 !important; color:aliceblue}
 .gt-container .gt-ico-text {
     display: none;
 }
+
+.gt-header-controls {
+    margin: 0.75em;
+    position: relative;
+}
