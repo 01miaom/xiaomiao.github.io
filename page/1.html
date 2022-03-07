@@ -10,12 +10,25 @@
     
     <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
   <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-        <script src="../1.js"></script>
-    <link href="../optional.css" rel="stylesheet">
-    <link rel="icon" href="../www/ico.jpeg">
+        <script src="./1.js"></script>
+    <link href="./optional.css" rel="stylesheet">
+    <link rel="icon" href="./www/ico.jpeg">
 </head>
+    <header>
+	<h1 class="head1">I'm <span>01miaom</span>,</h1>
+	<h2 class="head1" style="align-items: center">welcome to my personal page</h2>
+</header>
 <body>
-	  <div class="progress"; id="bar" style="position: sticky; top: 0; opacity: 0.8; background-color: rgba(255,255,255,0)"></div>
+<nav class="navbar"; style="display:inline">
+	<ul>
+        <ul style="margin: 1em">
+            <li class="li"><a href="#about"; style="color: grey"><span class="bi bi-file-person"; style="vertical-align: 12%"></span> About</a></li>
+		<li><a href="#blogs"; style="color: grey"><span class="bi bi-book"; style="vertical-align: 12%"></span> Blog</a></li>
+		<li><a href="#links"; style="color: grey"><span class="bi bi-chat-dots"; style="vertical-align: 12%"></span> Talk</a></li>
+        </ul>
+    </ul>
+     <div class="progress"; id="bar" style="position: sticky; top: 0; opacity: 0.8; background-color: rgba(255,255,255,0)"></div>
+    </nav>
 <section id="blogs">
 	<h2>Title</h2>
 	test
@@ -24,6 +37,14 @@
 	<h3>Discuss</h3>
   <div id="gitalk-container"></div>
 	</section>
+    <footer>
+<p class="p5">
+    <span class="s4">©01miaom 2022 <a href="https://github.com/01miaom">
+        <span class="s5">Github page</span>
+        <span class="s6"><span class="Apple-converted-space"></span></span>
+        </a></span>
+    </p>
+</footer>
   <script>
       const gitalk = new Gitalk({
   clientID: 'd0e745888ced424036d5',
@@ -38,6 +59,5 @@
 
     gitalk.render('gitalk-container')
     </script>
-
 </body>
 </html>
