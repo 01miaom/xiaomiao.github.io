@@ -225,4 +225,8 @@ body {background-color: #333 !important; color:aliceblue}
 .gt-container .gt-avatar img {
     border-radius: 50%;
 }
+
+.gt-container .gt-ico-text {
+    display: none;
+}
 	
