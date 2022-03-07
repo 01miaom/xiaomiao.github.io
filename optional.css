@@ -221,4 +221,8 @@ body {background-color: #333 !important; color:aliceblue}
 #rwd {
 	background: #212122;
 }
+.gt-avatar gt-header-avatar {
+    border-radius: 50%;
+    height:80px;
+}
 	
