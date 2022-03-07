@@ -229,4 +229,12 @@ body {background-color: #333 !important; color:aliceblue}
 .gt-container .gt-ico-text {
     display: none;
 }
+
+.gt-container .gt-svg {
+    display: none;
+}
+
+.gt-container .gt-btn-text {
+    display: none;
+}
 	
