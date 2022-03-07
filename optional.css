@@ -253,3 +253,7 @@ body {background-color: #333 !important; color:aliceblue}
 .gt-container .gt-meta {
     display: none;
 }
+
+. gt-container .gt-comment-content {
+    margin: 5px; 
+}
