@@ -169,8 +169,12 @@ section {
 	margin: 0;
 }
 	
-gt-container .gt-header-controls .gt-btn {
-    float: initial;
+gt-btn gt-btn-public {
+    float: none;
+}
+
+gt-btn gt-btn-preview {
+    float: none;
 }
   
 }
