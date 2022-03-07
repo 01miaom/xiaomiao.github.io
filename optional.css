@@ -254,4 +254,6 @@ body {background-color: #333 !important; color:aliceblue}
     display: none;
 }
 
-
+.gt-container .gt-comment-content {
+    border-radius: 5px;
+}
