@@ -253,7 +253,7 @@ body {background-color: #333 !important; color:aliceblue}
 .gt-container .gt-meta {
     margin: 1.25em;
     padding: 1em;
-    /*border-bottom: 1px solid #e9e9e9;*/
+    border-bottom: 1px solid #212122;
     font-size: 1em;
     position: relative;
     z-index: 3;
@@ -262,7 +262,7 @@ body {background-color: #333 !important; color:aliceblue}
 .gt-container .gt-header {
     display: flex;
     position: relative;
-    /*border-bottom: 1px solid #e9e9e9;*/
+    border-bottom: 1px solid #212122;
 }
 
 .gt-container .gt-ico-text {
