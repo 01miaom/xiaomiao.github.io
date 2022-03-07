@@ -237,4 +237,16 @@ body {background-color: #333 !important; color:aliceblue}
 .gt-container .gt-btn-text {
     display: none;
 }
-	
+
+.gt-container .gt-svg svg {
+    display: none;
+}
+
+.gt.ico gt-ico-heart {
+    display: none;
+}
+
+.gt-ico gt-ico-edit {
+    display: none;
+}
+
