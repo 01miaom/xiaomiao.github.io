@@ -283,3 +283,7 @@ body {background-color: #333 !important; color:aliceblue}
 .gt-comment-text {
     display: none;
 }
+
+.gt-container .gt-header-preview {
+    display: flex;
+}
