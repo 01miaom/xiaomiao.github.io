@@ -170,7 +170,7 @@ section {
 }
 	
 gt-container .gt-header-controls .gt-btn {
-    float: none;
+    float: initial;
 }
   
 }
