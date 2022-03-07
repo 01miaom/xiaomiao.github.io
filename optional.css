@@ -168,6 +168,10 @@ section {
 	width: 100%;
 	margin: 0;
 }
+	
+gt-container .gt-header-controls .gt-btn {
+    float: none;
+}
   
 }
 
