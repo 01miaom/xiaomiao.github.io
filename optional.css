@@ -169,11 +169,11 @@ section {
 	margin: 0;
 }
 	
-.gt-container .gt-header-controls .gt-btn .gt-btn-public {
+.gt-btn .gt-btn-public {
     float: none;
 }
-
-.gt-container .gt-header-controls .gt-btn .gt-btn-preview {
+	
+.gt-btn .gt-btn-preview {
     float: none;
 }
   
