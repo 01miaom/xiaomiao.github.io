@@ -226,10 +226,6 @@ body {background-color: #333 !important; color:aliceblue}
     border-radius: 50%;
 }
 
-.gt-container .gt-ico-text {
-    display: none;
-}
-
 .gt-container .gt-svg {
     display: none;
 }
@@ -243,10 +239,6 @@ body {background-color: #333 !important; color:aliceblue}
 }
 
 .gt-ico gt-ico-edit {
-    display: none;
-}
-
-.gt-container .gt-user-name {
     display: none;
 }
 
