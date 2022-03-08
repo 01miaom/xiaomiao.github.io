@@ -294,3 +294,7 @@ body {background-color: #333 !important; color:aliceblue}
 .gt-container .gt-header-preview {
     display: flex;
 }
+
+.gt-user-inner {
+    display: none;
+}
