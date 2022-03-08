@@ -13,28 +13,77 @@
         <script src="../1.js"></script>
     <link href="../optional.css" rel="stylesheet">
     <link rel="icon" href="../www/ico.jpeg">
-	</head>
-	    <header>
-</header>
+</head>
 <body>
+
+<header>
+	<h1 class="head1">I'm <span>01miaom</span>,</h1>
+	<h2 class="head1" style="align-items: center">welcome to my personal page</h2>
+</header>
+
 <nav class="navbar"; style="display:inline">
 	<ul>
         <ul style="margin: 1em">
+            <li class="li"><a href="#about"; style="color: grey"><span class="bi bi-file-person"; style="vertical-align: 12%"></span> About</a></li>
 		<li><a href="#blogs"; style="color: grey"><span class="bi bi-book"; style="vertical-align: 12%"></span> Blog</a></li>
 		<li><a href="#links"; style="color: grey"><span class="bi bi-chat-dots"; style="vertical-align: 12%"></span> Talk</a></li>
         </ul>
     </ul>
-     <div class="progress"; id="bar" style="position: sticky; top: 0; opacity: 0.8; background-color: rgba(255,255,255,0)"></div>
-    </nav>
-<section id="blogs">
-	<h2>Title</h2>
-	test
+    
+    
+    <div class="progress"; id="bar" style="position: sticky; top: 0; opacity: 0.8; background-color: rgba(255,255,255,0)">
+ 
+    </div>
+    
+</nav>
+
+<section id="about">
+	<h2 name="a">About Me</h2>
+	<p>
+
+	Hi there! I'm 01miaom. This is my amateur blog<small> </small>, I will update some interesting things when I have time.</p>
+	<h3>My little program</h3>
+	<div class="flex-container"; id="program">
+        <div onclick="window.open('https://github.com/01miaom/RGame')">RGame</div>
+	</div>
 </section>
+
+<section id="blogs">
+	<h2 name="a">My Blogs Catlog</h2>
+	<table>
+		<tr>
+            <th>Id</th>
+			<th>Title</th>
+			<th>Time</th>
+		</tr>
+		<tr onclick="window.open('https://github.com/01miaom/RGame')">
+            <td>1</td>
+			<td>Describe about RGame</td>
+			<td>2022-01-01</td>
+		</tr>
+	</table>
+</section>
+
 <section id="links">
-	<h3>Discuss</h3>
-  <div id="gitalk-container"></div>
-	</section>
-    <footer>
+	<h2 name="a">Discuss</h2>
+	 <div class="container m-5">
+ <div id="gitalk-container"></div>
+  </div>
+</section>
+
+
+<section id="rwd">
+     <div id="gitalk-container"></div>
+	<h2 name="a">Useful link</h2>
+     <div id="gitalk-container"></div>
+    <p></p>
+    <ul>
+        <li><a href="">test</a></li>
+    </ul>
+</section>
+
+
+<footer>
 <p class="p5">
     <span class="s4">©01miaom 2022 <a href="https://github.com/01miaom">
         <span class="s5">Github page</span>
@@ -42,7 +91,7 @@
         </a></span>
     </p>
 </footer>
-  <script>
+    <script>
       const gitalk = new Gitalk({
   clientID: 'd0e745888ced424036d5',
   clientSecret: 'efaaa2dde1e9a96e17324e6a9ca0f1f42fea5604',
@@ -56,5 +105,6 @@
 
     gitalk.render('gitalk-container')
     </script>
+
 </body>
 </html>
