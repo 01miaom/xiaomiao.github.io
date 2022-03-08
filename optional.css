@@ -136,7 +136,7 @@ div {
 }
 
 
-@media screen and (max-width: 1080px) {   
+@media screen and (max-width: 600px) {   
 
 nav li {
 	padding: 0;
