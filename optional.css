@@ -295,6 +295,6 @@ body {background-color: #333 !important; color:aliceblue}
     display: flex;
 }
 
-.gt-user-inner {
+.gt-user {
     display: none;
 }
