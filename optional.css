@@ -187,23 +187,23 @@ section {
 
 
 @media (prefers-color-scheme: dark) {
-body {background-color: #333 !important; color:aliceblue}
+body {background-color: #212122 !important; color:aliceblue}
     
 
 #about {
-	background: #212122;
+	background: #333;
 }
 
 #blogs {
-	background: #212122;
+	background: #333;
 }
 
 #links {
-	background: #212122;
+	background: #333;
 }
     
 #rwd {
-	background: #212122;
+	background: #333;
 }
     
 }
@@ -212,23 +212,23 @@ body {background-color: #333 !important; color:aliceblue}
 @media (prefers-color-scheme: light) {
 }
 
-body {background-color: #333 !important; color:aliceblue}
+body {background-color: #212122 !important; color:aliceblue}
     
 
 #about {
-	background: #212122;
+	background: #333;
 }
 
 #blogs {
-	background: #212122;
+	background: #333;
 }
 
 #links {
-	background: #212122;
+	background: #333;
 }
     
 #rwd {
-	background: #212122;
+	background: #333;
 }
 
 .gt-container .gt-avatar img {
