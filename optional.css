@@ -210,25 +210,31 @@ body {background-color: #212122 !important; color:aliceblue}
 
 
 @media (prefers-color-scheme: light) {
+body {background-color: #FFFFFF !important;
+    color:#333}
+#main_menu #sub_menu{
+    max-height: 0px;
+    /* color: black; */
+    background-color: rgba(245,247,249,1.00);
+    transition: max-height 0.25s ease-out;
+    overflow: hidden;
 }
 
-body {background-color: #212122 !important; color:aliceblue}
-    
-
 #about {
-	background: #333;
+	background: rgba(245,247,249,1.00);
 }
 
 #blogs {
-	background: #333;
+	background: rgba(245,247,249,1.00);
 }
 
 #links {
-	background: #333;
+	background: rgba(245,247,249,1.00);
 }
     
 #rwd {
-	background: #333;
+	background: rgba(245,247,249,1.00);
+}  
 }
 
 .gt-container .gt-avatar img {
