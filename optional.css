@@ -66,7 +66,7 @@ nav a:hover {
 }
 
 #about {
-	background: lightgreen;
+	background: rgba(245,247,249,1.00);
 }
 
 #about img {
@@ -97,7 +97,7 @@ nav a:hover {
 }
 
 #blogs {
-	background: lightsteelblue;
+	background: rgba(245,247,249,1.00);
 }
 
 #blogs table {
@@ -117,7 +117,7 @@ nav a:hover {
 }
 
 #links {
-	background: #deb887;
+	background: rgba(245,247,249,1.00);
 }
 
 #links a:link {
@@ -129,7 +129,7 @@ nav a:hover {
 }
 
 #rwd {
-	background: lightgrey;
+	background: rgba(245,247,249,1.00);
 }
 
 
