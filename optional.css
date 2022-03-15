@@ -313,3 +313,47 @@ body {background-color: #FFFFFF !important;
 .gt-container .gt-header-textarea {
     background-color: #ffffff; 
 }
+
+.table-column {
+    display: none !important;
+}
+
+.calendar {
+    min-height: 0px !important;
+    border-radius: 12px !important;
+}
+
+.py-2 {
+    border-radius: 12px !important;
+}
+
+rect.ContributionCalendar-day[data-level='0'] {
+    fill: #ebedf0!important;
+}
+
+rect.ContributionCalendar-day[data-level='1'] {
+    fill: #fdcdec!important;
+}
+
+rect.ContributionCalendar-day[data-level='2'] {
+    fill: #fc9bd9!important;
+}
+ 
+rect.ContributionCalendar-day[data-level='3'] {
+    fill: #fa6ac5!important;
+}
+
+rect.ContributionCalendar-day[data-level='4'] {
+    fill: #f838b2!important;
+}
+
+rect {
+    rx: 2 !important;
+    ry:2 !important;
+    width:6 !important;
+    height: 6 !important;
+}
+
+.js-calendar-graph-svg {
+    width:300 !important;
+}
