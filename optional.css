@@ -321,6 +321,7 @@ body {background-color: #FFFFFF !important;
 .calendar {
     min-height: 0px !important;
     border-radius: 12px !important;
+    display: block !important;
 }
 
 .py-2 {
