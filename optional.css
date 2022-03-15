@@ -305,3 +305,11 @@ body {background-color: #FFFFFF !important;
 .gt-user {
     display: none;
 }
+
+.gt-container .gt-comment-admin .gt-comment-content {
+    background-color: #e9ecef;   
+}
+
+.gt-container .gt-header-textarea {
+    background-color: #ffffff; 
+}
