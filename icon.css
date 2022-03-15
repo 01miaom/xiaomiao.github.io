@@ -12148,11 +12148,6 @@ body,html {
     font-family: "SF Pro SC","SF Pro Text","SF Pro Icons",PingFang SC,Lantinghei SC,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif
 }
 
-body,header,html {
-    height: 100%;
-    overflow-wrap: break-word
-}
-
 body {
     transition: color .2s ease-in-out,background-color .2s ease-in-out;
     background-color: var(--body-bg-color);
@@ -12282,10 +12277,6 @@ img[srcset] {
         transition: border-bottom-color .2s ease-in-out
     }
 
-    :root:not([data-user-color-scheme]) .gt-comment-admin .gt-comment-content {
-        background-color: transparent;
-        transition: background-color .2s ease-in-out
-    }
 }
 
 [data-user-color-scheme=dark] {
