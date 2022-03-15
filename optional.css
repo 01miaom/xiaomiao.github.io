@@ -326,6 +326,7 @@ body {background-color: #FFFFFF !important;
 
 .py-2 {
     border-radius: 12px !important;
+    display: block;
 }
 
 rect.ContributionCalendar-day[data-level='0'] {
