@@ -4,6 +4,12 @@ body {
 	font-family: 'Economica', sans-serif;
 }
 
+.js-calendar-graph-svg {
+    transform: scale(0.8);
+    align-self: center;
+}
+
+
 header {
 	text-align: center;
 	padding: 3em;
@@ -363,9 +369,4 @@ rect {
 
 .js-calendar-graph-svg {
     width:300 !important;
-}
-
-.js-calendar-graph-svg {
-    transform: scale(0.8);
-    align-self: center;
 }
