@@ -9,6 +9,10 @@ body {
     align-self: center;
 }
 
+.py-2 {
+    border-radius: 12px !important;
+    display: block;
+}
 
 header {
 	text-align: center;
@@ -185,8 +189,16 @@ section {
 }
 	
 .js-calendar-graph-svg {
-    transform: scale(0.4);
+    transform: scale(0.4) translate(0, -60px);
     align-self: center;
+}
+
+.py-2 {
+    height: 120px;
+}
+	
+.py-1 {
+    transform: translate(0px, -50px);
 }
   
 }
@@ -333,11 +345,6 @@ body {background-color: #FFFFFF !important;
     min-height: 0px !important;
     border-radius: 12px !important;
     display: block !important;
-}
-
-.py-2 {
-    border-radius: 12px !important;
-    display: block;
 }
 
 rect.ContributionCalendar-day[data-level='0'] {
