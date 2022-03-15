@@ -177,6 +177,11 @@ section {
 .gt-btn .gt-btn-preview {
     float: none;
 }
+	
+.js-calendar-graph-svg {
+    transform: scale(0.42);
+    align-self: center;
+}
   
 }
 
@@ -358,4 +363,9 @@ rect {
 
 .js-calendar-graph-svg {
     width:300 !important;
+}
+
+.js-calendar-graph-svg {
+    transform: scale(0.8);
+    align-self: center;
 }
