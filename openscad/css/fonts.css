@@ -1,0 +1,36 @@
+@font-face {
+    font-family: 'UbuntuMonoRegular';
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    src: url('../fonts/ubuntumono-r-webfont.woff2') format('woff2'),
+    url('../fonts/ubuntumono-r-webfont.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'UbuntuMonoItalic';
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    src: url('../fonts/ubuntumono-ri-webfont.woff2') format('woff2'),
+    url('../fonts/ubuntumono-ri-webfont.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'UbuntuMonoBold';
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    src: url('../fonts/ubuntumono-b-webfont.woff2') format('woff2'),
+    url('../fonts/ubuntumono-b-webfont.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'UbuntuMonoBoldItalic';
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    src: url('../fonts/ubuntumono-bi-webfont.woff2') format('woff2'),
+    url('../fonts/ubuntumono-bi-webfont.woff') format('woff');
+}
+
