@@ -189,7 +189,7 @@ section {
 }
 	
 .js-calendar-graph-svg {
-    transform: scale(0.38) translate(-520px, -10px);
+    transform: scale(0.38) translate(0, -20px);
     align-self: center;
 }
 
