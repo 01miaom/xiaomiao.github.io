@@ -20,7 +20,7 @@ header {
 	background-image: url('./www/header.jpeg');
 	background-size: cover;
 	background-position: center;
-    font-size: 30px;
+        /*font-size: 30px;*/
 	color: White;
 }
 
