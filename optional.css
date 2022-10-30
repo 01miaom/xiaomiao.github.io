@@ -388,8 +388,8 @@ html {
 }
 
 .card {
-    width: 150px;
-    height: 150px;
+    width: 140px;
+    height: 200px;
     /* margin:45px; */
     border-radius: 16px;
     background: #333;
@@ -423,8 +423,8 @@ html {
 }
 
 .card {
-    width: 150px;
-    height: 150px;
+    width: 140px;
+    height: 200px;
     /* margin:45px; */
     border-radius: 16px;
     background: #eee;
