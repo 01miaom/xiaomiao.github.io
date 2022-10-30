@@ -381,3 +381,53 @@ rect {
 .js-calendar-graph-svg {
     width:780px !important;
 }
+
+html {
+    --whiteShadow: -6px -6px 6px #555;
+    --blackShadow: 6px 6px 6px #111;
+}
+
+.card {
+    width: 150px;
+    height: 150px;
+    /* margin:45px; */
+    border-radius: 16px;
+    background: gray;
+}
+
+.left {
+    box-shadow: var(--blackShadow),
+        var(--whiteShadow);
+    padding: 38px;
+    margin-top: 20px;
+}
+
+.card.left {padding: 38px;margin-top: 20px;}
+
+.right {
+    box-shadow: inset var(--blackShadow),
+        var(--whiteShadow);
+}
+
+div#program {
+    width: 180px;
+    margin-left: 0px;
+    display: inline-flex;
+}
+
+@media (prefers-color-scheme: light) {
+
+html {
+    --whiteShadow: -6px -6px 6px #fff;
+    --blackShadow: 6px 6px 6px #ddd;
+}
+
+.card {
+    width: 150px;
+    height: 150px;
+    /* margin:45px; */
+    border-radius: 16px;
+    background: #eee;
+}
+    
+}
