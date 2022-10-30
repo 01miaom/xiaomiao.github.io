@@ -383,8 +383,8 @@ rect {
 }
 
 html {
-    --whiteShadow: -6px -6px 6px #555;
-    --blackShadow: 6px 6px 6px #111;
+    --whiteShadow: -6px -6px 6px #444;
+    --blackShadow: 6px 6px 6px #222;
 }
 
 .card {
@@ -392,7 +392,7 @@ html {
     height: 150px;
     /* margin:45px; */
     border-radius: 16px;
-    background: gray;
+    background: #333;
 }
 
 .left {
