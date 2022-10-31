@@ -398,11 +398,11 @@ html {
 .left {
     box-shadow: var(--blackShadow),
         var(--whiteShadow);
-    padding: 38px;
+    padding: 12px;
     margin-top: 20px;
 }
 
-.card.left {padding: 38px;margin-top: 20px;}
+.card.left {padding: 12px;margin-top: 20px;}
 
 .right {
     box-shadow: inset var(--blackShadow),
