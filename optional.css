@@ -410,7 +410,8 @@ html {
 }
 
 div#program {
-    width: 152px;
+    margin-left: 6px;
+    margin-right: 6px;
     margin-left: 0px;
     display: inline-flex;
 }
@@ -430,4 +431,8 @@ html {
     background: #eee;
 }
     
+}
+
+.card.left:hover{
+    background: rgb(217 226 129 / 10%);
 }
