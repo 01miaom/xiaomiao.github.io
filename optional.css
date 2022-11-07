@@ -436,3 +436,7 @@ html {
 .card.left:hover{
     background: rgb(217 226 129 / 10%);
 }
+
+span.typed-cursor.typed-cursor--blink {
+    display: none;
+}
