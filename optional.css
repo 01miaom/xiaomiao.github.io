@@ -445,6 +445,7 @@ span.typed-cursor {
 
 #programName {
     transform: translateY(170px);
+    text-align: center;
 }
 
 #programImg {
