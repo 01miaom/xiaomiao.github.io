@@ -440,3 +440,13 @@ html {
 span.typed-cursor {
     display: none;
 }
+
+#programName {
+    transform: translateY(170px);
+}
+
+#programImg {
+    width: 140px;
+    height: 160px;
+    position: absolute;
+}
