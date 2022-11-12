@@ -393,6 +393,7 @@ html {
     /* margin:45px; */
     border-radius: 16px;
     background: #333;
+    overflow: hidden;
 }
 
 .left {
@@ -402,7 +403,7 @@ html {
     margin-top: 20px;
 }
 
-.card.left {padding: 12px;margin-top: 20px;}
+.card.left {padding: 0px;margin-top: 20px;}
 
 .right {
     box-shadow: inset var(--blackShadow),
@@ -413,6 +414,7 @@ div#program {
     margin-left: 6px;
     margin-right: 6px;
     margin-left: 0px;
+    display: inline-flex;
     display: inline-flex;
 }
 
