@@ -436,7 +436,7 @@ html {
 }
 
 .card.left:hover{
-    background: rgb(217 226 129 / 10%);
+    box-shadow: 0 0 3em 0 #f4f4f4;
 }
 
 span.typed-cursor {
