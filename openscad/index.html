@@ -11,6 +11,16 @@
     <link rel="stylesheet" href="css/bootstrap/bootstrap-responsive.min.css">
     <link rel="stylesheet" href="css/openscad.net.css">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/theme/darcula.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/clike/clike.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/addon/hint/show-hint.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/addon/hint/show-hint.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/addon/fold/foldcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/addon/fold/foldgutter.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/addon/fold/brace-fold.min.js"></script>
+
   </head>
   <body>
 
@@ -323,6 +333,120 @@
     <script src="js/lib/underscore.js"></script>
     <script src="js/lib/openscadOpenjscadTranslator.js"></script>
     <script data-main="js/main" src="js/require.js"></script>
+<style>
+        .cm-miaokeyword {
+          color: #81A2BE;
+        }
+        .cm-miaocomment {
+          color: gray;
+        }
+        .cm-miaonumber {
+          color: #CC6666;
+        }
+        .cm-miaomodule {
+          color: #DF935F;
+        }
+        .cm-s-darcula.CodeMirror {
+         height: 100%;   
+        }
+        .cm-miaopunctuation {
+          color: #8ABEB7;
+        }
+    </style>
+
+  <script>
+    CodeMirror.defineMode("openscad", function() {
+      return {
+        token: function(stream, state) {
+          var keywords = /^(difference|cube|sphere|intersection|union|translate|rotate|scale|resize|mirror|color|cylinder|polyhedron|surface)\b/;
+          if (stream.match(keywords)) {
+            return "miaokeyword";
+          }
+            
+          var keywords = /^(for|module|function)\b/;
+          if (stream.match(keywords)) {
+            return "miaomodule";
+          }
+
+          if (stream.match(/^\/\/.*/)) {
+            return "miaocomment";
+          }
+            
+          if (stream.match(/^\d+(\.\d+)?/)) {
+            return "miaonumber";
+          }
+        if (stream.match(/^[.,;:(){}\[\]=<>]/)) {
+        return "miaopunctuation";
+      }
+
+          stream.next();
+          return null;
+        }
+      };
+    });
+
+    var textarea = document.getElementById("editor");
+    
+    var editor = CodeMirror.fromTextArea(textarea, {
+      mode: "openscad",  
+      lineNumbers: true,
+      theme: "darcula", 
+    foldGutter: true, 
+      lineWrapping: true,
+    hintOptions: {
+        completeSingle: false 
+      }
+    });
+      
+    // hint
+    CodeMirror.registerHelper("hint", "openscad", function(editor) {
+      var cursor = editor.getCursor();
+      var token = editor.getTokenAt(cursor);
+      var start = token.start;
+      var end = cursor.ch;
+      var line = cursor.line;
+      var currentWord = token.string;
+
+      var functions = ["cube", "sphere", "cylinder", "difference", "union", "intersection"];
+      var hints = [];
+
+      var regex = new RegExp("^" + currentWord, "i"); //ignore caps
+      for (var i = 0; i < functions.length; i++) {
+        var func = functions[i];
+        if (regex.test(func)) {
+          hints.push(func);
+        }
+      }
+
+      return {
+        list: hints,
+        from: CodeMirror.Pos(line, start),
+        to: CodeMirror.Pos(line, end)
+      };
+    });
+
+    editor.on("change", function(instance, changeObj) {
+      textarea.value = instance.getValue();
+    });
+
+      
+    editor.on("inputRead", function(editor, inputType) {
+  if (inputType && inputType.origin === "+input") {
+    setTimeout(function() {
+      editor.showHint();
+    }, 100);
+  }
+});
+      
+      
+      setTimeout(function() {
+  var startcode =  document.getElementById("editor").value;
+      
+    editor.setValue(startcode);
+}, 600);
+
+
+  </script>
 
   </body>
 </html>
