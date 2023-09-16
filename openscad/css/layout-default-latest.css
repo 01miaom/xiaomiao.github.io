@@ -69,7 +69,7 @@ body {
  *	RESIZER-BARS
  */
 .ui-layout-resizer	{ /* all 'resizer-bars' */
-	background:		#DDD;
+	background:		#555;
 	border:			1px solid #BBB;
 	border-width:	0;
 	}
