@@ -14,7 +14,7 @@ define("UI", [	"lib/jquery-latest",
 
 	var uiLayout, logLayout;
 	var colorSchemes = {
-		"cornfield": { backgroundColor: [255/255, 255/255, 229/255], faceColor: [249/255, 215/255, 44/255, 1.0] },
+		"cornfield": { backgroundColor: [0.2,0.2,0.2], faceColor: [249/255, 215/255, 44/255, 1.0] },
 		"metallic": { backgroundColor: [170/255, 170/255, 255/255], faceColor: [221/255, 221/255, 225/255, 1.0] },
 		"sunset": { backgroundColor: [170/255, 68/255, 68/255], faceColor: [255/255, 170/255, 170/255, 1.0] },
 		"sunrise": { backgroundColor: [196/255, 207/255, 210/255], faceColor: [255/255, 245/255, 184/255, 1.0] }
