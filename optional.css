@@ -107,7 +107,7 @@ nav a:hover {
 	margin: 2em;
 }
 
-#blogs th, td {
+#blogs td {
 	padding: 1em;
 	border-bottom: 1px solid #ccc;
 }
@@ -350,32 +350,51 @@ body {background-color: #FFFFFF !important;
     border-radius: 12px !important;
     display: block !important;
 }
-
-rect.ContributionCalendar-day[data-level='0'] {
-    fill: #ebedf0!important;
+.sr-only {
+    display: none;
+}
+td.ContributionCalendar-day {
+    min-width: 8px;
+    min-height: 8px;
 }
 
-rect.ContributionCalendar-day[data-level='1'] {
-    fill: #fdcdec!important;
+td.ContributionCalendar-day[data-level='0'] {
+    background-color: #ebedf0!important;
 }
 
-rect.ContributionCalendar-day[data-level='2'] {
-    fill: #fc9bd9!important;
+td.ContributionCalendar-day[data-level='1'] {
+    background-color: #fdcdec!important;
+}
+
+td.ContributionCalendar-day[data-level='2'] {
+    background-color: #fc9bd9!important;
 }
  
-rect.ContributionCalendar-day[data-level='3'] {
-    fill: #fa6ac5!important;
+td.ContributionCalendar-day[data-level='3'] {
+    background-color: #fa6ac5!important;
 }
 
-rect.ContributionCalendar-day[data-level='4'] {
-    fill: #f838b2!important;
+td.ContributionCalendar-day[data-level='4'] {
+    background-color: #f838b2!important;
 }
 
-rect {
-    rx: 2 !important;
-    ry:2 !important;
-    width:6 !important;
-    height: 6 !important;
+td.ContributionCalendar-day {
+    border-radius: 2px;
+}
+
+td.ContributionCalendar-label {
+    padding: 0px;
+    border: none;
+}
+
+td:first-child {
+    display: none;
+}
+
+table.ContributionCalendar-grid.js-calendar-graph-table {
+    border-spacing:2px 2px !important;
+    border-collapse: initial;
+     margin: 0 auto;
 }
 
 .js-calendar-graph-svg {
