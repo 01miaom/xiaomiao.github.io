@@ -388,14 +388,14 @@ td.ContributionCalendar-label {
     display: none;
 }
 
-td:first-child {
-    display: none;
-}
-
 table.ContributionCalendar-grid.js-calendar-graph-table {
     border-spacing:2px 2px !important;
     border-collapse: initial;
      margin: 0 auto;
+}
+
+thead {
+    display: none;
 }
 
 .js-calendar-graph-svg {
@@ -472,4 +472,55 @@ span.typed-cursor {
     width: 140px;
     height: 160px;
     position: absolute;
+}
+
+::-webkit-scrollbar {
+        display:none !important;
+}
+
+@media (prefers-color-scheme: dark) {
+body {background-color: #212122 !important; color:aliceblue}
+    
+td.ContributionCalendar-day[data-level='0'] {
+    background-color: #424242!important;
+}
+
+#about {
+	background: #333;
+}
+
+#blogs {
+	background: #333;
+}
+
+#links {
+	background: #333;
+}
+    
+#rwd {
+	background: #333;
+}
+    
+}
+
+@media screen and (max-width: 600px) {  
+td.ContributionCalendar-day {
+    min-width: 4px;
+    min-height: 4px;
+    width: 4px!important;
+    height: 4px!important;
+}
+tr {
+    height: 4px !important;
+}
+.calendar {
+    height: 80px;
+}
+.py-2 {
+    height: 80px;
+}
+td.ContributionCalendar-day {
+    border-radius: 1px;
+}
+    
 }
