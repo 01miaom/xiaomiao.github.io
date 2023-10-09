@@ -385,6 +385,7 @@ td.ContributionCalendar-day {
 td.ContributionCalendar-label {
     padding: 0px;
     border: none;
+    display: none;
 }
 
 td:first-child {
