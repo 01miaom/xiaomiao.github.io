@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Encrypt File</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Encrypt</h1>
+        <input type="password" id="encryptionPassword" placeholder="Enter password">
+        <div class="upload-area" onclick="fileToEncrypt.click()">
+            <div class="upload-icon">&#8679;</div>
+            <div class="upload-text">Click or drag a file here to upload</div>
+        </div>
+        <input type="file" id="fileToEncrypt" accept="*/*" style="display:none">
+        <button onclick="encryptFile()">Encrypt File</button>
+    </div>
+    <div class="container">
+
+        <h1>Decrypt</h1>
+        <input type="password" id="decryptionPassword" placeholder="Enter password">
+        <div class="upload-area" onclick="fileToDecrypt.click()">
+            <div class="upload-icon">&#8679;</div>
+            <div class="upload-text">Click or drag a file here to upload</div>
+        </div>
+        <input type="file" id="fileToDecrypt" accept=".enc" style="display:none">
+        <button onclick="decryptFile()">Decrypt File
+        </button>
+        <div id="errorText" style="color: red;"></div>
+    </div>
+
+    <script>
+        function encryptFile() {
+            const password = document.getElementById("encryptionPassword").value;
+            const fileInput = document.getElementById("fileToEncrypt");
+
+            if (!password || !fileInput.files[0]) {
+                alert("Please provide a password and the file to encrypt!");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+                const data = event.target.result;
+
+                // 
+                const encPassword = new TextEncoder().encode(password);
+                crypto.subtle.importKey(
+                    "raw",
+                    encPassword,
+                    "PBKDF2",
+                    false,
+                    ["deriveKey"]
+                ).then(function(key) {
+                    crypto.subtle.deriveKey(
+                        {
+                            "name": "PBKDF2",
+                            "salt": new TextEncoder().encode("salt"),
+                            "iterations": 100000,
+                            "hash": "SHA-256"
+                        },
+                        key,
+                        { "name": "AES-CBC", "length": 256 },
+                        false,
+                        ["encrypt", "decrypt"]
+                    ).then(function(encryptionKey) {
+                        crypto.subtle.encrypt(
+                            { "name": "AES-CBC", "iv": new Uint8Array(16) },
+                            encryptionKey,
+                            data
+                        ).then(function(encryptedData) {
+                            const encryptedBlob = new Blob([encryptedData], { type: file.type });
+                            const downloadLink = document.createElement("a");
+                            downloadLink.href = URL.createObjectURL(encryptedBlob);
+                            downloadLink.download = file.name + ".enc";
+                            downloadLink.click();
+                        });
+                    });
+                });
+            };
+
+            reader.readAsArrayBuffer(file);
+        }
+
+        function decryptFile() {
+            const password = document.getElementById("decryptionPassword").value;
+            const fileInput = document.getElementById("fileToDecrypt");
+            const errorText = document.getElementById("errorText");
+
+            if (!password || !fileInput.files[0]) {
+                alert("Please provide a password and the file!");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+                const data = event.target.result;
+
+                const encPassword = new TextEncoder().encode(password);
+                crypto.subtle.importKey(
+                    "raw",
+                    encPassword,
+                    "PBKDF2",
+                    false,
+                    ["deriveKey"]
+                ).then(function(key) {
+                    crypto.subtle.deriveKey(
+                        {
+                            "name": "PBKDF2",
+                            "salt": new TextEncoder().encode("salt"),
+                            "iterations": 100000,
+                            "hash": "SHA-256"
+                        },
+                        key,
+                        { "name": "AES-CBC", "length": 256 },
+                        false,
+                        ["encrypt", "decrypt"]
+                    ).then(function(decryptionKey) {
+                        crypto.subtle.decrypt(
+                            { "name": "AES-CBC", "iv": new Uint8Array(16) },
+                            decryptionKey,
+                            data
+                        ).then(function(decryptedData) {
+                            const decryptedBlob = new Blob([decryptedData], { type: file.type });
+                            const downloadLink = document.createElement("a");
+                            downloadLink.href = URL.createObjectURL(decryptedBlob);
+                            downloadLink.download = file.name.replace(".enc", "");
+                            downloadLink.click();
+			     errorText.textContent = "";
+                        }).catch(function() {
+                            errorText.textContent = "Wrong password！";
+                        });
+                    }).catch(function() {
+                        errorText.textContent = "Wrong password！";
+                    });
+                }).catch(function() {
+                    errorText.textContent = "Wrong password！";
+                });
+            };
+
+            reader.readAsArrayBuffer(file);
+        }
+    </script>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #222;
+}
+
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #333;
+    border: 1px solid #555;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    font-size: 24px;
+    color: aliceblue;
+}
+
+input[type="password"],
+input[type="file"] {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #555;
+    Background-color: #333;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #ccc;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #555;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #777;
+}
+
+#fileToEncrypt,
+#fileToDecrypt {
+    display: none;
+}
+
+.upload-area {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 5px;
+    Margin:20px;
+}
+
+.upload-area:hover {
+    background-color: #e5e5e5;
+}
+
+.upload-icon {
+    font-size: 40px;
+    color: #aaa;
+}
+
+.upload-text {
+    font-size: 16px;
+    color: #777;
+}
+input#encryptionPassword {
+    background-color: #333;
+}
+
+</style>
+</body>
+</html>
