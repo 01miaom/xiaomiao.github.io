@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="application-name" content="calendar">
+<link rel="stylesheet" href="./icons.css">
+<style>
+html {
+    background: white;
+}
+.calendar{
+	width:100%;
+	height:50vh;
+	background:#fff;/*222*/
+    box-shadow:2px 6px 6px rgba(0,0,0,0.1);
+    padding: 10px;
+}
+.body-list ul{
+	width:100%;
+	font-family:arial;
+	font-weight:bold;
+	font-size:14px;
+    margin-block-start: 0;
+    padding-inline-start: 0;
+    margin-bottom: 0;
+}
+.title{
+    box-shadow:0px 6px 6px rgba(0,0,0,0.1); 
+}
+.body-list ul li{
+	width:14.28%;
+	height:5.7vh;
+	line-height:36px;
+	list-style-type:none;
+	display:block;
+	box-sizing:border-box;
+	float:left;
+	text-align:center;
+    font-size: large;
+}
+.lightgrey{
+	color:#a8a8a8;
+}
+.darkgrey{
+	color:#565656; 
+}
+.green{
+	color:goldenrod;
+}
+.greenbox{
+	border:1px solid #6ac13c;
+	background:#e9f8df; 
+    border-radius: 40px;
+}
+    
+.selected-date{
+	border:1px solid #ddd;
+	background:#eee; 
+    border-radius: 40px;
+}
+h2#calendar-year {
+    padding: 8px;
+}
+    .holiday {
+        color: goldenrod;
+    }
+    .control-bar{
+        background: #ddd;
+        height: 8vh;
+        width: 100%;
+        display: flex;
+        padding: 6px;
+        bottom: 0;
+        position: fixed;
+    }
+    .list{
+        background: #eee;
+        /*height: 44vh;*/
+    }
+.post-prevnext {
+    margin-top: 0;
+}
+.calender-page {
+    /*text-align: center;*/
+    flex:auto;
+    width: 33%;
+    text-align: center;
+}
+.setting-page {
+    /*text-align: right;*/
+    width: 33%;
+    text-align: center;
+    }
+svg {
+    overflow: hidden;
+    vertical-align: middle;
+    transform: scale(1.5);
+    color: goldenrod;
+}
+.time-flow{
+    width: 33%;
+    text-align: center;
+}
+.add {
+    bottom: 90px;
+    right: 20px;
+    position: absolute;
+    height: 60px;
+    width: 60px;
+    border-radius: 30px;
+    /*background: aqua;*/
+    box-shadow:2px 6px 6px rgba(0,0,0,0.1);
+    backdrop-filter:blur(20px);
+}
+    h1{
+    font-size: 2rem;
+    margin-bottom: 0rem;
+    }
+    .event-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: blueviolet; 
+            border-radius: 50%;
+            margin-bottom: 2px;
+}
+    li {
+    color: #555;
+}
+    .modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    width: 90%;
+    height: 40%;
+    overflow: hidden;
+    outline: 0;
+    background: bisque;
+    left: 5vw;
+    top: 30vh;
+    border-radius: 12px;
+    padding: 11px;
+}
+    #eventText {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    resize: none; 
+    font-family: 'Arial', sans-serif; 
+    color: #333; 
+}
+
+#eventText::placeholder {
+    color: #aaa; 
+}
+
+#eventText:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
+    outline: none; 
+}
+    </style>
+<body>
+<div class="calendar">
+  <div class="title">
+    <div style="display: flex">
+    <h2 class="green small" id="calendar-year">Year</h2>
+    <h1 class="green" id="calendar-title">Month</h1>
+      </div>
+
+  </div>
+  <div class="body">
+    <div class="lightgrey body-list">
+      <ul>
+        <li class="holiday">SUN</li>
+        <li>MON</li>
+        <li>TUE</li>
+        <li>WED</li>
+        <li>THU</li>
+        <li>FRI</li>
+        <li class="holiday">SAT</li>
+      </ul>
+    </div>
+    <div class="darkgrey body-list">
+      <ul id="days">
+      </ul>
+    </div>
+  </div>
+    
+      <div class="post-prevnext row">
+      <article class="post-prev col-6" id = "prev"><a href="">
+        <i class="iconfont icon-arrowleft"></i>
+          <span class="hidden-mobile">Previous</span> 
+          <span class="visible-mobile">Previous</span></a>
+      </article>
+      
+      <article class="post-next col-6" id = "next"><a href="">
+          <span class="hidden-mobile">Next</span> 
+          <span class="visible-mobile">Next</span> 
+          <i class="iconfont icon-arrowright"></i></a>
+      </article>
+      </div>
+    
+</div>
+<div class="list">
+<!-- Add a modal for adding events -->
+    <div id="eventModal" class="modal" style="display:none;">
+        <div>
+            <span onclick="document.getElementById('eventModal').style.display='none'" class="close">&times;</span>
+            <h2>Add Event</h2>
+            <textarea id="eventText" rows="4" placeholder="Enter your event description"></textarea>
+            <div onclick="saveEvent()" style="right: 0;
+    position: absolute;
+    margin: 23px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+  <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
+</svg></div>
+        </div>
+    </div>
+    <div id="eventsList">
+        <h2>Events</h2>
+        <ul id="eventsForDate"></ul>
+    </div>
+    
+<div class="add" onclick="enterEvent()">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" viewBox="0 0 100 125" style="height:60px;weight:60px;fill: goldenrod;
+    transform: rotateZ(-30deg) scale(1.2) translate(4px, 7px);;"><g><path d="M69.22,58.127c-1.661-0.723-3.923-4.017-5.5-8.012c-1.06-2.687-4.221-10.631-12.788-11.238    c-0.171-0.037-0.348-0.059-0.53-0.059c-0.087,0-0.165,0.013-0.252,0.014c-0.086-0.001-0.164-0.014-0.252-0.014    c-0.182,0-0.359,0.022-0.53,0.059c-8.565,0.607-11.727,8.551-12.788,11.238c-1.576,3.995-3.838,7.289-5.5,8.013    C23.977,61.219,19.714,68.7,20.716,76.321c0.919,6.988,5.997,12.006,13.25,13.094c0.849,0.127,1.704,0.19,2.56,0.19    c2.332,0,4.664-0.47,6.859-1.393c0.959-0.403,1.827-0.872,2.666-1.324c1.45-0.783,2.719-1.46,4.1-1.617    c1.381,0.157,2.65,0.834,4.1,1.617c0.839,0.452,1.707,0.921,2.667,1.324c2.195,0.923,4.527,1.393,6.859,1.393    c0.855,0,1.71-0.063,2.559-0.19c7.254-1.088,12.332-6.105,13.251-13.094C80.588,68.7,76.326,61.219,69.22,58.127z M74.628,75.669    c-0.625,4.757-4.003,8.047-9.035,8.801c-2.222,0.334-4.616,0.025-6.739-0.866c-0.736-0.31-1.461-0.7-2.229-1.115    c-1.59-0.858-3.364-1.81-5.526-2.137c-0.255-0.075-0.522-0.121-0.802-0.111c-0.05,0.002-0.097,0.01-0.146,0.013    c-0.05-0.003-0.096-0.011-0.146-0.013c-0.271-0.01-0.531,0.035-0.781,0.107c-2.172,0.324-3.953,1.28-5.548,2.141    c-0.768,0.415-1.493,0.806-2.229,1.115c-2.123,0.892-4.516,1.2-6.739,0.866c-5.032-0.754-8.409-4.044-9.035-8.801    c-0.583-4.436,1.484-10.382,7.402-12.956c4.259-1.854,7.123-8.144,8.156-10.762c2.205-5.583,4.885-8.025,8.919-8.123    c4.035,0.098,6.715,2.54,8.919,8.123c1.033,2.618,3.896,8.908,8.155,10.761C73.144,65.287,75.212,71.233,74.628,75.669z"/><path d="M26.311,55.257c1.624-2.866,2.208-6.394,1.644-9.932c-1.084-6.805-6.244-11.937-12.002-11.937    c-0.515,0-1.034,0.041-1.542,0.122c-3.145,0.501-5.829,2.457-7.558,5.508c-1.624,2.866-2.208,6.394-1.644,9.932    c1.084,6.805,6.244,11.937,12.002,11.937c0.515,0,1.034-0.041,1.542-0.122C21.898,60.264,24.583,58.308,26.311,55.257z     M21.961,52.792c-0.963,1.7-2.382,2.778-3.994,3.035c-3.498,0.562-7.077-2.999-7.82-7.664c-0.386-2.423-0.011-4.796,1.057-6.68    c0.963-1.7,2.382-2.778,3.994-3.035c0.25-0.04,0.504-0.06,0.756-0.06c3.271,0,6.375,3.393,7.064,7.724    C23.404,48.535,23.028,50.908,21.961,52.792z"/><path d="M35.371,37.996c6.351,0,11.517-6.19,11.517-13.8s-5.167-13.8-11.517-13.8c-6.35,0-11.517,6.19-11.517,13.8    S29.021,37.996,35.371,37.996z M35.371,15.396c3.594,0,6.517,3.947,6.517,8.8s-2.923,8.8-6.517,8.8    c-3.593,0-6.517-3.947-6.517-8.8S31.778,15.396,35.371,15.396z"/><path d="M86.579,33.725c-0.753-0.183-1.528-0.274-2.303-0.274c-5.492,0-10.594,4.619-12.131,10.984    c-0.841,3.482-0.537,7.045,0.856,10.031c1.483,3.177,4.004,5.339,7.1,6.085c0.752,0.183,1.527,0.274,2.303,0.274c0,0,0,0,0.001,0    c5.492,0,10.594-4.62,12.13-10.984c0.841-3.482,0.537-7.045-0.856-10.031C92.196,36.633,89.674,34.471,86.579,33.725z     M89.675,48.667c-0.985,4.081-4.111,7.158-7.27,7.158c-0.381,0-0.761-0.045-1.13-0.135c-1.587-0.383-2.916-1.568-3.742-3.34    c-0.916-1.962-1.103-4.356-0.527-6.742c0.985-4.081,4.111-7.158,7.271-7.158c0.38,0,0.76,0.045,1.13,0.135    c1.587,0.383,2.916,1.568,3.742,3.34C90.063,43.887,90.251,46.282,89.675,48.667z"/><path d="M64.551,37.996c6.35,0,11.517-6.19,11.517-13.8s-5.167-13.8-11.517-13.8c-6.351,0-11.517,6.19-11.517,13.8    S58.201,37.996,64.551,37.996z M64.551,15.396c3.593,0,6.517,3.947,6.517,8.8s-2.923,8.8-6.517,8.8    c-3.594,0-6.517-3.947-6.517-8.8S60.958,15.396,64.551,15.396z"/></g></svg>
+    </div>
+    
+    </div>
+<div class="control-bar">
+    
+<div class="time-flow">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-layout-wtf" viewBox="0 0 16 16">
+  <path d="M5 1v8H1V1h4zM1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H1zm13 2v5H9V2h5zM9 1a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9zM5 13v2H3v-2h2zm-2-1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H3zm12-1v2H9v-2h6zm-6-1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H9z"/>
+</svg>  
+</div>
+
+<div class="calender-page">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-plus" viewBox="0 0 16 16">
+  <path d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
+  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+</svg>
+</div>
+    
+
+<div>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+  <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
+  <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
+</svg>
+</div>
+    </div>
+    </body>
+    <script>
+    
+        var month_olympic = [31,29,31,30,31,30,31,31,30,31,30,31];
+        var month_normal = [31,28,31,30,31,30,31,31,30,31,30,31];
+        var month_name = ["January","Febrary","March","April","May","June","July","Auguest","September","October","November","December"];
+
+        var holder = document.getElementById("days");
+        var prev = document.getElementById("prev");
+        var next = document.getElementById("next");
+        var ctitle = document.getElementById("calendar-title");
+        var cyear = document.getElementById("calendar-year");
+
+        var my_date = new Date();
+        var my_year = my_date.getFullYear();
+        var my_month = my_date.getMonth();
+        var my_day = my_date.getDate();
+
+        var select_date = my_date;
+
+        function dayStart(month, year) {
+            var tmpDate = new Date(year, month, 1);
+            return (tmpDate.getDay());
+        }
+
+
+        function daysMonth(month, year) {
+            if (year%4===0&&year%100!==0||year%400===0) {
+                return (month_olympic[month]);
+            } else {
+                return (month_normal[month]);
+            }
+        }
+
+        function refreshDate(){
+            var str = "";
+            var totalDay = daysMonth(my_month, my_year); 
+            var firstDay = dayStart(my_month, my_year); 
+            var myclass;
+            for(var i=0; i<firstDay; i++){ 
+                str += "<li></li>"; 
+            }
+            for(var i=1; i<= totalDay; i++){
+                if((i<my_day && my_year==my_date.getFullYear() && my_month==my_date.getMonth()) || my_year<my_date.getFullYear() || ( my_year==my_date.getFullYear() && my_month<my_date.getMonth())){ 
+                    myclass = " class='day lightgrey'"; 
+                }else if (i==my_day && my_year==my_date.getFullYear() && my_month==my_date.getMonth()){
+                    myclass = " class='day green greenbox'"; 
+                }else{
+                    myclass = " class='day darkgrey'"; 
+                }
+                str += "<li"+myclass+">"+i+"</li>";
+            }
+            if(totalDay+firstDay<35){
+                for(var i=1; i<= 35-totalDay-firstDay; i++){
+                    myclass = " class='day lightgrey'";
+                    str += "<li"+myclass+">"+i+"</li>"; 
+                }
+            }
+            else{
+                for(var i=1; i<= 42-totalDay-firstDay; i++){
+                    myclass = " class='day lightgrey'";
+                    str += "<li"+myclass+">"+i+"</li>"; 
+                }   
+            }
+            holder.innerHTML = str;
+            ctitle.innerHTML = month_name[my_month];
+            cyear.innerHTML = my_year;
+        }
+        refreshDate(); 
+
+        prev.onclick = function(e){
+            e.preventDefault();
+            my_month--;
+            if(my_month<0){
+                my_year--;
+                my_month = 11;
+            }
+            refreshDate();
+            loadEvents();
+            showEventsForDate();
+        }
+        next.onclick = function(e){
+            e.preventDefault();
+            my_month++;
+            if(my_month>11){
+                my_year++;
+                my_month = 0;
+            }
+            refreshDate();
+            loadEvents();
+            showEventsForDate();
+        }
+
+
+        function showEventModal() {
+            document.getElementById('eventModal').style.display='block';
+        }
+
+        // Function to save the event
+        function saveEvent() {
+            var eventText = document.getElementById('eventText').value;
+            if (eventText.trim() !== "") {
+                // Store the event data in localStorage
+                var eventData = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : {};
+                if(document.getElementsByClassName("selected-date").length==0){
+                    selectedDate=my_day;
+                }
+                else{
+                    var selectedDate = document.getElementsByClassName("selected-date")[0].textContent;
+                }
+                var key = my_year + '-' + (my_month + 1) + '-' + selectedDate;
+                eventData[key] = eventData[key] || [];
+                if(typeof(eventData[key])=="string"){eventData[key]=[eventData[key]]}
+                eventData[key].push(eventText);
+                localStorage.setItem('events', JSON.stringify(eventData));
+                showEventsForDate();
+
+                // Update the dot under the date to indicate an event
+                var dateElement = document.querySelector('.selected-date');
+                if(dateElement == null) dateElement = document.querySelector('.greenbox');
+                var hasChildSpan = dateElement.childNodes.length > 1;
+                if (!hasChildSpan) {
+                    var dotElement = document.createElement('span');
+                    dotElement.className = 'event-dot';
+                    dateElement.appendChild(dotElement);
+                }
+
+                // Close the modal
+                document.getElementById('eventModal').style.display='none';
+            }
+        }
+
+        // Function to load events on page load
+        function loadEvents() {
+            var eventData = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : {};
+            for(i=1;i<32; i++){
+                var key = my_year + '-' + (my_month + 1) + '-' + i;
+                var eventText = eventData[key];
+                if (eventText) {
+                    // Update the dot under the date to indicate an event
+                    //var dateElement = document.querySelector('.selected-date');
+                    var dateElement = document.getElementsByClassName("day")[i-1];
+                    var dotElement = document.createElement('span');
+                    dotElement.className = 'event-dot';
+                    dateElement.appendChild(dotElement);
+                }
+            }
+        }
+        
+        function enterEvent() {
+            document.getElementById('eventModal').style.display='block';
+        }
+        
+        // Function to show the events list for the selected date
+        function showEventsForDate() {
+            if(document.getElementsByClassName("selected-date").length==0){
+                selectedDate=my_day;
+            }
+            else{
+                var selectedDate = document.getElementsByClassName("selected-date")[0].textContent;
+            }
+            var selectedDate = my_year + '-' + (my_month + 1) + '-' + selectedDate;
+            var eventData = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : {};
+            //var eventsForDate = eventData[selectedDate];
+            var eventsForDate = Array.isArray(eventData[selectedDate]) ? eventData[selectedDate] : [eventData[selectedDate]].filter(Boolean);
+            
+            if(eventsForDate=="") document.getElementById('eventsList').style.display = 'none';
+
+            if (eventsForDate && eventsForDate.length > 0) {
+                var eventsList = document.getElementById('eventsForDate');
+                eventsList.innerHTML = ""; // Clear previous events
+
+                eventsForDate.forEach(function(event) {
+                    var listItem = document.createElement('li');
+                    listItem.textContent = event;
+                    console.log(event);
+                    eventsList.appendChild(listItem);
+                });
+
+                document.getElementById('eventsList').style.display = 'block';
+            }
+        }
+        
+        var selectedDateElement;
+
+        // Function to handle click or touch events on date elements
+        function handleDateClick(event) {
+            var clickedDateElement = event.target;
+
+            // Check if the clicked element has the "day" class
+            if (clickedDateElement.classList.contains('day')) {
+                // Remove the previously selected date class
+                if (selectedDateElement) {
+                    selectedDateElement.classList.remove('selected-date');
+                }
+
+                // Add the selected date class to the clicked date
+                clickedDateElement.classList.add('selected-date');
+
+                // Save the selected date element for future reference
+                selectedDateElement = clickedDateElement;
+
+                // Show events for the selected date
+                showEventsForDate();
+            }
+        }
+
+        // Add click or touch event listener to date elements
+        var dateElements = document.querySelectorAll('.darkgrey, .lightgrey, .greenbox');
+        dateElements.forEach(function(dateElement) {
+            dateElement.addEventListener('click', handleDateClick);
+            dateElement.addEventListener('touchstart', handleDateClick);
+        });
+        
+
+        showEventsForDate();
+
+        loadEvents();
+
+    </script>
+</html>
