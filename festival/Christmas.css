@@ -1,0 +1,27 @@
+      .snowflake {
+        position: absolute;
+        background: rgba(255,255,255,0.2); 
+        border-radius: 50%;
+        pointer-events: none;
+        animation: fall linear infinite;
+        z-index: 100;
+      }
+
+      @keyframes fall {
+        to {
+          transform: translateY(240px);
+        }
+      }
+       body {
+        margin: 0;
+        background-color: #333;/*#2e5626;  */
+        color: #ffffff; 
+        font-family: 'Arial', sans-serif;
+      }
+	canvas {
+	height: 150px !important;
+	width: 50px !important;
+        position: absolute;
+    transform: translate(18px, -115px);
+	}
+	
