@@ -216,6 +216,64 @@ svg {
             <span onclick="document.getElementById('eventModal').style.display='none'" class="close">&times;</span>
             <h2>Add Event</h2>
             <textarea id="eventText" rows="4" placeholder="Enter your event description"></textarea>
+
+		 <label for="eventTime">Event Time:</label>
+            <select id="eventTime">
+                <option value="00:00">00:00</option>
+                <option value="00:30">00:30</option>
+                <option value="01:00">01:00</option>
+                <option value="01:30">01:30</option>
+                <option value="02:00">02:00</option>
+                <option value="02:30">02:30</option>
+                <option value="03:00">03:00</option>
+                <option value="03:30">03:30</option>
+                <option value="04:00">04:00</option>
+                <option value="04:30">04:30</option>
+                <option value="05:00">05:00</option>
+                <option value="05:30">05:30</option>
+                <option value="06:00">06:00</option>
+                <option value="06:30">06:30</option>
+                <option value="07:00">07:00</option>
+                <option value="07:30">07:30</option>
+                <option value="08:00">08:00</option>
+                <option value="08:30">08:30</option>
+                <option value="09:00">09:00</option>
+                <option value="09:30">09:30</option>
+                <option value="10:00">10:00</option>
+                <option value="10:30">10:30</option>
+                <option value="11:00">11:00</option>
+                <option value="11:30">11:30</option>
+                <option value="12:00">12:00</option>
+                <option value="12:30">12:30</option>
+                <option value="13:00">13:00</option>
+                <option value="13:30">13:30</option>
+                <option value="14:00">14:00</option>
+                <option value="14:30">14:30</option>
+                <option value="15:00">15:00</option>
+                <option value="15:30">15:30</option>
+                <option value="16:00">16:00</option>
+                <option value="16:30">16:30</option>
+                <option value="17:00">17:00</option>
+                <option value="17:30">17:30</option>
+                <option value="18:00">18:00</option>
+                <option value="18:30">18:30</option>
+                <option value="19:00">19:00</option>
+                <option value="19:30">19:30</option>
+                <option value="20:00">20:00</option>
+                <option value="20:30">20:30</option>
+                <option value="21:00">21:00</option>
+                <option value="21:30">21:30</option>
+                <option value="22:00">22:00</option>
+                <option value="22:30">22:30</option>
+                <option value="23:00">23:00</option>
+                <option value="23:30">23:30</option>
+            </select>
+            <div>
+                <label for="repeatWeekly">Repeat Weekly:</label>
+                <input type="checkbox" id="repeatWeekly">
+            </div>
+            
+		
             <div onclick="saveEvent()" style="right: 0;
     position: absolute;
     margin: 23px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
@@ -355,9 +413,39 @@ svg {
             document.getElementById('eventModal').style.display='block';
         }
 
+        function generateICS(eventInfo, selectedDate) {
+            var startDateTime = selectedDate + 'T' + eventInfo.time;
+            var endDateTime = selectedDate + 'T' + eventInfo.time;  //
+
+            var icsContent = `BEGIN:VCALENDAR
+        VERSION:2.0
+        BEGIN:VEVENT
+        SUMMARY:${eventInfo.text}
+        DTSTART:${startDateTime}
+        DTEND:${endDateTime}
+        DESCRIPTION:${eventInfo.text}
+        RRULE:FREQ=${eventInfo.repeatWeekly ? 'WEEKLY' : 'DAILY'};COUNT=1
+        STATUS:${eventInfo.finished ? 'COMPLETED' : 'CONFIRMED'}
+        SEQUENCE:0
+        BEGIN:VALARM
+        TRIGGER:-PT15M
+        DESCRIPTION:Reminder
+        ACTION:DISPLAY
+        END:VALARM
+        END:VEVENT
+        END:VCALENDAR`;
+
+            return icsContent;
+        }
+
+
         // Function to save the event
         function saveEvent() {
             var eventText = document.getElementById('eventText').value;
+            var eventTime = document.getElementById('eventTime').value;//
+            //var repeatWeekly = document.getElementById('repeatWeekly').checked;
+            var eventFinished = false;
+            
             if (eventText.trim() !== "") {
                 // Store the event data in localStorage
                 var eventData = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : {};
@@ -367,12 +455,41 @@ svg {
                 else{
                     var selectedDate = document.getElementsByClassName("selected-date")[0].textContent;
                 }
+                
+
+                var eventInfo = {
+                    text: eventText,
+                    time: eventTime,
+                    //repeatWeekly: repeatWeekly,
+                    finished: eventFinished
+                };
+
+                
                 var key = my_year + '-' + (my_month + 1) + '-' + selectedDate;
                 eventData[key] = eventData[key] || [];
                 if(typeof(eventData[key])=="string"){eventData[key]=[eventData[key]]}
-                eventData[key].push(eventText);
+                eventData[key].push(eventInfo);
                 localStorage.setItem('events', JSON.stringify(eventData));
                 showEventsForDate();
+                
+
+                // 生成ICS文件内容
+                var icsContent = generateICS(eventInfo, key);
+                
+                //window.open('data:text/calendar;charset=utf-8,'+escape(icsContent))
+                
+
+                var blob = new Blob([icsContent], { type: 'text/calendar' });
+                var url = window.URL.createObjectURL(blob);
+                var downloadLink = document.createElement('a');
+                downloadLink.href = url;
+                downloadLink.download = 'event.ics';
+
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+                
+                
 
                 // Update the dot under the date to indicate an event
                 var dateElement = document.querySelector('.selected-date');
@@ -431,7 +548,37 @@ svg {
 
                 eventsForDate.forEach(function(event) {
                     var listItem = document.createElement('li');
-                    listItem.textContent = event;
+                    if (typeof event === 'string') {
+                        listItem.textContent = event;//old version
+                    }else{
+                        listItem.textContent = event.text;
+                        //
+                        var timeElement = document.createElement('span');
+                        timeElement.textContent = ' Time: ' + event.time;
+                        listItem.appendChild(timeElement);
+
+                        //
+                        var completionCheckbox = document.createElement('input');
+                        completionCheckbox.type = 'checkbox';
+                        completionCheckbox.id = 'completeCheckbox';
+                        completionCheckbox.checked = event.finished;
+                        completionCheckbox.addEventListener('change', function () {
+                            //
+                            event.finished = this.checked;
+
+                            //
+                            eventData[selectedDate] = eventsForDate;
+                            localStorage.setItem('events', JSON.stringify(eventData));
+                            console.log("Event marked as completed:", event.text, "Completed:", this.checked);
+                            
+                        });
+
+                        //
+                        var space = document.createTextNode(' ');
+
+                        listItem.appendChild(space);
+                        listItem.appendChild(completionCheckbox);
+                    }
                     console.log(event);
                     eventsList.appendChild(listItem);
                 });
@@ -439,7 +586,7 @@ svg {
                 document.getElementById('eventsList').style.display = 'block';
             }
         }
-        
+	    
         var selectedDateElement;
 
         // Function to handle click or touch events on date elements
