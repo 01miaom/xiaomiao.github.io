@@ -436,7 +436,6 @@ SUMMARY:${eventInfo.text}
 DTSTART;TZID=Asia/Hong_Kong:${startDateTime}
 DTEND;TZID=Asia/Hong_Kong:${endDateTime}
 DESCRIPTION:${eventInfo.text}
-RRULE:FREQ=${eventInfo.repeatWeekly ? 'WEEKLY' : 'DAILY'};COUNT=1
 STATUS:${eventInfo.finished ? 'COMPLETED' : 'CONFIRMED'}
 SEQUENCE:0
 BEGIN:VALARM
