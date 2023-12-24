@@ -426,24 +426,26 @@ svg {
         function generateICS(eventInfo, selectedDate) {
             var startDateTime = selectedDate + 'T' + eventInfo.time;
             var endDateTime = selectedDate + 'T' + eventInfo.time;  //
+	    startDateTime = convertToICalFormat(startDateTime);
+            endDateTime = convertToICalFormat(endDateTime);
 
             var icsContent = `BEGIN:VCALENDAR
-        VERSION:2.0
-        BEGIN:VEVENT
-        SUMMARY:${eventInfo.text}
-        DTSTART:${startDateTime}
-        DTEND:${endDateTime}
-        DESCRIPTION:${eventInfo.text}
-        RRULE:FREQ=${eventInfo.repeatWeekly ? 'WEEKLY' : 'DAILY'};COUNT=1
-        STATUS:${eventInfo.finished ? 'COMPLETED' : 'CONFIRMED'}
-        SEQUENCE:0
-        BEGIN:VALARM
-        TRIGGER:-PT15M
-        DESCRIPTION:Reminder
-        ACTION:DISPLAY
-        END:VALARM
-        END:VEVENT
-        END:VCALENDAR`;
+VERSION:2.0
+BEGIN:VEVENT
+SUMMARY:${eventInfo.text}
+DTSTART:${startDateTime}
+DTEND:${endDateTime}
+DESCRIPTION:${eventInfo.text}
+RRULE:FREQ=${eventInfo.repeatWeekly ? 'WEEKLY' : 'DAILY'};COUNT=1
+STATUS:${eventInfo.finished ? 'COMPLETED' : 'CONFIRMED'}
+SEQUENCE:0
+BEGIN:VALARM
+TRIGGER:-PT15M
+DESCRIPTION:Reminder
+ACTION:DISPLAY
+END:VALARM
+END:VEVENT
+END:VCALENDAR`;
 
             return icsContent;
         }
@@ -486,6 +488,7 @@ svg {
                  var icsContent = generateICS(eventInfo, key);
                 
 		 window.open('data:text/calendar;charset=utf-8,'+escape(icsContent))
+		    /*
 		var dataURL = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(icsContent);
 		                console.log(dataURL)
 		var downloadLink = document.createElement('a');
@@ -495,6 +498,7 @@ svg {
 		document.body.appendChild(downloadLink);
 		downloadLink.click();
 		document.body.removeChild(downloadLink);
+  */
                 
 
                 // Update the dot under the date to indicate an event
