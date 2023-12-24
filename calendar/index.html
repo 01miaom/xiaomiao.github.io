@@ -413,6 +413,16 @@ svg {
             document.getElementById('eventModal').style.display='block';
         }
 
+	function convertToICalFormat(dateString) {
+          let date = dateString
+
+          const formattedDate = date.replace(/[-:]/g, '').split('.')[0];
+
+          const iCalDate = `${formattedDate}`;
+
+          return iCalDate;
+        }
+
         function generateICS(eventInfo, selectedDate) {
             var startDateTime = selectedDate + 'T' + eventInfo.time;
             var endDateTime = selectedDate + 'T' + eventInfo.time;  //
@@ -473,22 +483,18 @@ svg {
                 showEventsForDate();
                 
 
-                // 生成ICS文件内容
-                var icsContent = generateICS(eventInfo, key);
+                 var icsContent = generateICS(eventInfo, key);
                 
-                //window.open('data:text/calendar;charset=utf-8,'+escape(icsContent))
-                
+		 window.open('data:text/calendar;charset=utf-8,'+escape(icsContent))
+		var dataURL = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(icsContent);
+		                console.log(dataURL)
+		var downloadLink = document.createElement('a');
+		downloadLink.href = dataURL;
+		downloadLink.download = 'event.ics';
 
-                var blob = new Blob([icsContent], { type: 'text/calendar' });
-                var url = window.URL.createObjectURL(blob);
-                var downloadLink = document.createElement('a');
-                downloadLink.href = url;
-                downloadLink.download = 'event.ics';
-
-                document.body.appendChild(downloadLink);
-                downloadLink.click();
-                document.body.removeChild(downloadLink);
-                
+		document.body.appendChild(downloadLink);
+		downloadLink.click();
+		document.body.removeChild(downloadLink);
                 
 
                 // Update the dot under the date to indicate an event
