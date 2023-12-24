@@ -486,8 +486,8 @@ END:VCALENDAR`;
 
                  var icsContent = generateICS(eventInfo, key);
                 
-		 window.open('data:text/calendar;charset=utf-8,'+escape(icsContent))
-		 /*   
+		 //window.open('data:text/calendar;charset=utf-8,'+escape(icsContent))
+		   
 		var dataURL = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(icsContent);
 		                console.log(dataURL)
 		var downloadLink = document.createElement('a');
@@ -497,7 +497,7 @@ END:VCALENDAR`;
 		document.body.appendChild(downloadLink);
 		downloadLink.click();
 		document.body.removeChild(downloadLink);
-  */
+  
   
                 
 
