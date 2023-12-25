@@ -117,7 +117,7 @@ svg {
     backdrop-filter:blur(20px);
 }
 .add:active{
-        background: #eee;
+        background: #ddd;
     }
     h1{
     font-size: 2rem;
@@ -562,10 +562,25 @@ END:VCALENDAR`;
                 if (eventText) {
                     // Update the dot under the date to indicate an event
                     //var dateElement = document.querySelector('.selected-date');
-                    var dateElement = document.getElementsByClassName("day")[i-1];
-                    var dotElement = document.createElement('span');
-                    dotElement.className = 'event-dot';
-                    dateElement.appendChild(dotElement);
+                    let showDot = false;
+                    for(let i=0; i<eventText.length; i++){
+                        if(eventText[i].finished == false){
+                            showDot = true;
+                        }
+                    }
+
+		     var dateElement = document.getElementsByClassName("day")[i-1];
+                     var spans = dateElement.querySelectorAll('span');
+
+                     spans.forEach(function(span) {
+                            dateElement.removeChild(span);
+                     });
+                    
+                    if(showDot){
+                        var dotElement = document.createElement('span');
+                        dotElement.className = 'event-dot';
+                        dateElement.appendChild(dotElement);
+                    }
                 }
             }
         }
@@ -619,6 +634,7 @@ END:VCALENDAR`;
                             eventData[selectedDate] = eventsForDate;
                             localStorage.setItem('events', JSON.stringify(eventData));
                             console.log("Event marked as completed:", event.text, "Completed:", this.checked);
+			    loadEvents();
                             
                         });
 
