@@ -194,6 +194,9 @@ ul {
 input[type=checkbox] {
     left:-20px;
     }
+.completed-event{
+     background: #ddd;   
+}
     </style>
 <body>
 <div class="calendar">
@@ -626,6 +629,10 @@ END:VCALENDAR`;
                         completionCheckbox.type = 'checkbox';
                         completionCheckbox.id = 'completeCheckbox';
                         completionCheckbox.checked = event.finished;
+
+			if (event.finished) {
+                            listItem.classList.add('completed-event'); 
+                        }
                         completionCheckbox.addEventListener('change', function () {
                             //
                             event.finished = this.checked;
@@ -635,7 +642,7 @@ END:VCALENDAR`;
                             localStorage.setItem('events', JSON.stringify(eventData));
                             console.log("Event marked as completed:", event.text, "Completed:", this.checked);
 			    loadEvents();
-                            
+                            showEventsForDate();
                         });
 
                         //
