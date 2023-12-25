@@ -171,6 +171,26 @@ svg {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
     outline: none; 
 }
+.event-card {
+    list-style-type: none;
+    margin: 10px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding-left: 40px;
+}
+ul {
+    padding-left: 0;
+}
+.event-time {
+    right: -70vw;
+    position: relative;    
+}
+input[type=checkbox] {
+    left:-90px;
+    }
     </style>
 <body>
 <div class="calendar">
@@ -574,13 +594,15 @@ END:VCALENDAR`;
 
                 eventsForDate.forEach(function(event) {
                     var listItem = document.createElement('li');
+		    listItem.classList.add('event-card'); 
                     if (typeof event === 'string') {
                         listItem.textContent = event;//old version
                     }else{
                         listItem.textContent = event.text;
                         //
                         var timeElement = document.createElement('span');
-                        timeElement.textContent = ' Time: ' + event.time;
+			timeElement.classList.add('event-time');
+                        timeElement.textContent = event.time;
                         listItem.appendChild(timeElement);
 
                         //
