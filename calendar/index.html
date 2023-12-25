@@ -504,18 +504,16 @@ END:VCALENDAR`;
                 };
 
                 
-                var key = my_year + '-' + (my_month + 1) + '-' + selectedDate;
-
-		var tmpDate = new Date(key);
-                var tmpYear = tmpDate.getFullYear();
-                var tmpMonth = ("0" + (tmpDate.getMonth() + 1)).slice(-2);
-                var tmpDay = ("0" + tmpDate.getDate()).slice(-2);
-
+                var tmpYear = my_year;
+                var tmpMonth = ("0" + (my_month + 1)).slice(-2);
+                var tmpDay = ("0" + selectedDate).slice(-2);
+                
                 var key = tmpYear + "-" + tmpMonth + "-" + tmpDay;
-		    
-                eventData[key] = eventData[key] || [];
-                if(typeof(eventData[key])=="string"){eventData[key]=[eventData[key]]}
-                eventData[key].push(eventInfo);
+                
+                var oldkey = my_year + '-' + (my_month + 1) + '-' + selectedDate;
+                eventData[oldkey] = eventData[oldkey] || [];
+                if(typeof(eventData[oldkey])=="string"){eventData[oldkey]=[eventData[oldkey]]}
+                eventData[oldkey].push(eventInfo);
                 localStorage.setItem('events', JSON.stringify(eventData));
                 showEventsForDate();
                 
