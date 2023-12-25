@@ -186,11 +186,11 @@ ul {
     padding-left: 0;
 }
 .event-time {
-    right: -70vw;
-    position: relative;    
+    right: 8vw;
+    position: fixed;    
 }
 input[type=checkbox] {
-    left:-90px;
+    left:-20px;
     }
     </style>
 <body>
@@ -641,8 +641,9 @@ END:VCALENDAR`;
                         //
                         var space = document.createTextNode(' ');
 
-                        listItem.appendChild(space);
-                        listItem.appendChild(completionCheckbox);
+                        //listItem.appendChild(space);
+                        //listItem.appendChild(completionCheckbox);
+			listItem.insertBefore(completionCheckbox, listItem.firstChild);
                     }
                     console.log(event);
                     eventsList.appendChild(listItem);
