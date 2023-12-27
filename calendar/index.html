@@ -81,6 +81,7 @@ h2#calendar-year {
         height: 42vh;
         overflow: scroll;
 	position: relative;
+	background: rgba(245,247,249,1);  
     }
 .post-prevnext {
     margin-top: 0;
@@ -129,7 +130,7 @@ svg {
             display: inline-block;
             width: 8px;
             height: 8px;
-            background-color: blueviolet; 
+            background-color: #fa6ac5; /*default is important color*/
             border-radius: 50%;
             margin-bottom: 2px;
 }
@@ -146,11 +147,12 @@ svg {
     height: 40%;
     overflow: hidden;
     outline: 0;
-    background: bisque;
+    background: rgba(245,247,249,1.00);
     left: 5vw;
     top: 30vh;
     border-radius: 12px;
     padding: 11px;
+    box-shadow: 6px 6px 6px rgba(0,0,0,0.1);
 }
     #eventText {
     width: 100%;
@@ -195,7 +197,7 @@ input[type=checkbox] {
     left:-20px;
     }
 .completed-event{
-     background: #ddd;   
+     background: #eee;   
 }
     </style>
 <body>
