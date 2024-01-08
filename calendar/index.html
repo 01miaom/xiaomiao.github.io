@@ -615,13 +615,12 @@ END:VCALENDAR`;
                     // Update the dot under the date to indicate an event
                     //var dateElement = document.querySelector('.selected-date');
                     let showDot = false;
-                    for(let i=0; i<eventText.length; i++){
+                    for(let j=0; j<eventText.length; j++){
                         if(eventText[i].finished == false){
                             showDot = true;
 			    workload[i - 1]++;
                         }
                     }
-		console.log(workload);
 
 		     var dateElement = document.getElementsByClassName("day")[i-1];
                      var spans = dateElement.querySelectorAll('span');
