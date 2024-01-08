@@ -4,6 +4,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="application-name" content="calendar">
 <link rel="apple-touch-startup-image" href="./apple-launch.png">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <link href="./icon.png" rel="apple-touch-icon-precomposed">
 <link rel="stylesheet" href="./icons.css">
 <style>
@@ -202,6 +203,10 @@ input[type=checkbox] {
 h2, label{
     color: #555;
 }
+canvas#myChart {
+    margin-left: 80px;
+    margin-bottom: 4px;
+}
     </style>
 <body>
 <div class="calendar">
@@ -209,6 +214,7 @@ h2, label{
     <div style="display: flex">
     <h2 class="green small" id="calendar-year">Year</h2>
     <h1 class="green" id="calendar-title">Month</h1>
+    <canvas id="myChart" style="width:70%;max-width:150px" height="30px"></canvas>
       </div>
 
   </div>
@@ -353,7 +359,43 @@ h2, label{
     </div>
     </body>
     <script>
-    
+        const xValues = Array.from({ length: 31 }, (_, i) => i + 1);
+
+        var mychart = new Chart("myChart", {
+          type: "line",
+          data: {
+            labels: xValues,
+            datasets: [{ 
+              data: xValues,
+              pointRadius: 2,
+              borderColor: 'rgba(255, 99, 132, 1)',
+              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              fill: true
+            }]
+          },
+          options: {
+            maintainAspectRatio: false,
+            aspectRatio: 2, 
+            legend: {
+                display: false},
+            tooltips: {
+                enabled: false
+            },
+            hover: {
+                mode: null
+            },
+            scales: {
+            xAxes: [{
+                display: false 
+            }],
+            yAxes: [{
+                display: false 
+            }]
+        }
+          }
+        });
+
+	    
         var month_olympic = [31,29,31,30,31,30,31,31,30,31,30,31];
         var month_normal = [31,28,31,30,31,30,31,31,30,31,30,31];
         var month_name = ["January","Febrary","March","April","May","June","July","Auguest","September","October","November","December"];
@@ -559,10 +601,12 @@ END:VCALENDAR`;
                 // Close the modal
                 document.getElementById('eventModal').style.display='none';
             }
+		loadEvents();
         }
 
         // Function to load events on page load
         function loadEvents() {
+	    var workload = Array.from({ length: 31 }, () => 0);
             var eventData = localStorage.getItem('events') ? JSON.parse(localStorage.getItem('events')) : {};
             for(i=1;i<32; i++){
                 var key = my_year + '-' + (my_month + 1) + '-' + i;
@@ -574,6 +618,7 @@ END:VCALENDAR`;
                     for(let i=0; i<eventText.length; i++){
                         if(eventText[i].finished == false){
                             showDot = true;
+			    workload[i - 1]++;
                         }
                     }
 
@@ -591,6 +636,10 @@ END:VCALENDAR`;
                     }
                 }
             }
+
+	    	mychart.data.datasets[0].data = workload;
+        	console.log(mychart.data)
+        	mychart.update();
         }
         
         function enterEvent() {
