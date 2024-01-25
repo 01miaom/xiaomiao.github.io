@@ -211,8 +211,7 @@ canvas#myChart {
 .settings-container {
     background-color: #fff;
     padding: 20px;
-    border-radius: 2px;
-    height: 100%;
+    height: 100vh;
 }
 
 h1 {
@@ -945,6 +944,54 @@ END:VCALENDAR`;
             document.getElementsByClassName("list")[0].style.display = "none";
             document.getElementsByClassName("settings-container")[0].style.display = "block";
             
+        }
+
+	document.getElementById('night-mode').addEventListener('change', function () {
+
+            const isNightMode = this.checked;
+
+            if (isNightMode) {
+                dark();
+                localStorage.setItem("dark","true");
+                
+            } else {
+                light();
+
+                localStorage.setItem("false","true");
+            }
+        });
+        
+        
+        function dark(){
+            const calendarElement = document.getElementsByClassName('calendar')[0];
+            const listElement = document.getElementsByClassName('list')[0];
+            const controlBarElement = document.getElementsByClassName('control-bar')[0];
+            const settingElement = document.getElementsByClassName('settings-container')[0];
+            
+            calendarElement.style.background = '#222';
+            listElement.style.background = '#222';
+            controlBarElement.style.background = '#333';
+            settingElement.style.background = '#222';    
+        }
+        
+        function light(){
+            const calendarElement = document.getElementsByClassName('calendar')[0];
+            const listElement = document.getElementsByClassName('list')[0];
+            const controlBarElement = document.getElementsByClassName('control-bar')[0];
+            const settingElement = document.getElementsByClassName('settings-container')[0];
+            
+            calendarElement.style.background = '';
+            listElement.style.background = '';
+            controlBarElement.style.background = '';
+            settingElement.style.background = '';
+        }
+
+	    
+        var darkmode = localStorage.getItem("dark")
+        if(darkmode == "true"){
+            dark();
+            const nightModeButton = document.getElementById('night-mode');
+            nightModeButton.checked = true;
         }
 
     </script>
