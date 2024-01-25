@@ -904,21 +904,27 @@ END:VCALENDAR`;
         });
 
         document.getElementById('upload-data').addEventListener('click', function () {
-            const uploadInput = document.getElementById('upload-input');
-            const file = uploadInput.files[0];
+            const uploadInput = document.createElement('input');
+            uploadInput.type = 'file';
+            uploadInput.accept = '.json';
+            uploadInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const jsonData = e.target.result;
+                        localStorage.setItem('calendar', jsonData);
+                        alert('sucess');
+                    };
+                    reader.readAsText(file);
+                } else {
+                    alert('please select a json file');
+                }
+            });
 
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const jsonData = e.target.result;
-                    localStorage.setItem('events', jsonData);
-                    alert('sucess');
-                };
-                reader.readAsText(file);
-            } else {
-                alert('please select a json file');
-            }
+            uploadInput.click();
         });
+        
         
         
         function advanced(){
