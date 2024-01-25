@@ -207,6 +207,100 @@ canvas#myChart {
     margin-left: 30px;
     margin-bottom: 4px;
 }
+
+.settings-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 2px;
+    height: 100%;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.setting-option {
+    margin-top: 40px;
+    display: flex;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+select, input, button {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #e91e63;
+    border-radius: 4px;
+    width: 60vw;
+    box-sizing: border-box;
+    margin-left: 40px;
+    position: absolute;
+    right: 20px;
+}
+
+button {
+    background-color: #e91e63;
+    color: #fff;
+    cursor: pointer;
+    width: 60vw;
+}
+
+button:hover {
+    background-color: #d81b60;
+}
+    
+.toggle-container {
+    display: inline-block;
+    position: absolute;
+    right: 20px;  
+    width: 60px;
+    height: 38px;
+}
+    
+.button-label {
+    width: 26vw;   
+}
+
+.toggle {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 34px;
+    transition: background-color 0.3s;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"]:checked + .toggle {
+    background-color: #e91e63;
+}
+
+input[type="checkbox"]:checked + .toggle::before {
+    transform: translateX(26px);
+}
+
+.toggle::before {
+    content: '';
+    position: absolute;
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
     </style>
 <body>
 <div class="calendar">
@@ -357,6 +451,46 @@ canvas#myChart {
 </svg>
 </div>
     </div>
+
+
+ <!---- setting   ---->
+<div class="settings-container">
+    <h1>Settings</h1>
+
+    <div class="setting-option">
+        <label for="language">Language</label>
+        <select id="language">
+            <option value="en">English</option>
+            <option value="zh">中文</option>
+        </select>
+    </div>
+
+    <div class="setting-option">
+        <label for="style">Style</label>
+        <select id="style">
+            <option value="light">Shiny</option>
+            <option value="dark">Dark</option>
+        </select>
+    </div>
+    
+    <div class="setting-option">
+        <label for="night-mode">Dark</label>
+        <div class="toggle-container">
+            <input type="checkbox" id="night-mode">
+            <label class="toggle" for="night-mode"></label>
+        </div>
+    </div>
+
+    <div class="setting-option">
+        <label class="button-label">Downloads Calendar Data</label>
+        <button id="download-data">Downloads</button>
+    </div>
+
+    <div class="setting-option">
+        <label class="button-label">Uploads Calendar Data</label>
+        <button id="upload-data">Update</button>
+    </div>
+</div>
     </body>
     <script>
         const xValues = Array.from({ length: 31 }, (_, i) => i + 1);
@@ -749,6 +883,63 @@ END:VCALENDAR`;
         showEventsForDate();
 
         loadEvents();
+
+	 document.getElementById('download-data').addEventListener('click', function () {
+            const calendarData = localStorage.getItem('events');
+
+            if (calendarData) {
+                const blob = new Blob([calendarData], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'calendar.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } else {
+                alert('empty');
+            }
+        });
+
+        document.getElementById('upload-data').addEventListener('click', function () {
+            const uploadInput = document.getElementById('upload-input');
+            const file = uploadInput.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const jsonData = e.target.result;
+                    localStorage.setItem('events', jsonData);
+                    alert('sucess');
+                };
+                reader.readAsText(file);
+            } else {
+                alert('please select a json file');
+            }
+        });
+        
+        
+        function advanced(){
+            document.getElementsByClassName("calendar")[0].style.display = "none";
+            document.getElementsByClassName("list")[0].style.display = "none";
+            document.getElementsByClassName("settings-container")[0].style.display = "none";
+        }
+        
+        
+        function center(){
+            document.getElementsByClassName("calendar")[0].style.display = "block";
+            document.getElementsByClassName("list")[0].style.display = "block";
+            document.getElementsByClassName("settings-container")[0].style.display = "none";
+        }
+        
+        function setting(){
+            document.getElementsByClassName("calendar")[0].style.display = "none";
+            document.getElementsByClassName("list")[0].style.display = "none";
+            document.getElementsByClassName("settings-container")[0].style.display = "block";
+            
+        }
 
     </script>
 </html>
