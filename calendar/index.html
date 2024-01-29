@@ -971,12 +971,14 @@ END:VCALENDAR`;
             const controlBarElement = document.getElementsByClassName('control-bar')[0];
             const settingElement = document.getElementsByClassName('settings-container')[0];
 	    const cardElement = document.getElementsByClassName('event-card')[0];
+	    const bodyElement = document.getElementsByTagName('body');
             
             calendarElement.style.background = '#222';
             listElement.style.background = '#222';
             controlBarElement.style.background = '#333';
             settingElement.style.background = '#222';
 	    cardElement.style.background = '#333';
+	    bodyElement.style.background = '#222';
         }
         
         function light(){
@@ -985,12 +987,14 @@ END:VCALENDAR`;
             const controlBarElement = document.getElementsByClassName('control-bar')[0];
             const settingElement = document.getElementsByClassName('settings-container')[0];
 	    const cardElement = document.getElementsByClassName('event-card')[0];
+	    const bodyElement = document.getElementsByTagName('body');
             
             calendarElement.style.background = '';
             listElement.style.background = '';
             controlBarElement.style.background = '';
             settingElement.style.background = '';
 	    cardElement.style.background = '';
+	    bodyElement.style.background = '';
         }
 
 	    
