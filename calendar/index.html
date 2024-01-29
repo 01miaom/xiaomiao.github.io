@@ -585,13 +585,13 @@ input[type="checkbox"]:checked + .toggle::before {
             }
             if(totalDay+firstDay<35){
                 for(var i=1; i<= 42-totalDay-firstDay; i++){ //use 35, if dont want the last line
-                    myclass = " class='day lightgrey'";
+                    myclass = " class='day darkgray'";
                     str += "<li"+myclass+">"+i+"</li>"; 
                 }
             }
             else{
                 for(var i=1; i<= 42-totalDay-firstDay; i++){
-                    myclass = " class='day lightgrey'";
+                    myclass = " class='day darkgrey'";
                     str += "<li"+myclass+">"+i+"</li>"; 
                 }   
             }
@@ -988,6 +988,15 @@ END:VCALENDAR`;
                 element.classList.add('dark-mode');
             });
 	    bodyElement.style.background = '#222';
+
+	    var newMeta = document.createElement('meta');
+            
+            newMeta.name = 'theme-color';
+            newMeta.content = '#222';
+
+            var head = document.head || document.getElementsByTagName('head')[0];
+
+            head.appendChild(newMeta);
         }
         
         function light(){
@@ -1006,6 +1015,13 @@ END:VCALENDAR`;
                 element.classList.remove('dark-mode');
             });
 	    bodyElement.style.background = '';
+
+	    var metaToRemove = document.querySelector('meta[name="theme-color"]');
+
+            if (metaToRemove) {
+                
+                metaToRemove.parentNode.removeChild(metaToRemove);
+            }
         }
 
 	    
