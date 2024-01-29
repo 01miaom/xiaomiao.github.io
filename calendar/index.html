@@ -301,6 +301,10 @@ input[type="checkbox"]:checked + .toggle::before {
     border-radius: 50%;
     transition: transform 0.3s;
 }
+
+.dark-mode {
+    background: #333
+}
     </style>
 <body>
 <div class="calendar">
@@ -821,6 +825,9 @@ END:VCALENDAR`;
 			if (event.finished) {
                             listItem.classList.add('completed-event'); 
                         }
+
+			if(localStorage.getItem("dark")=='true')listItem.classList.add('dark-mode');
+			    
                         completionCheckbox.addEventListener('change', function () {
                             //
                             event.finished = this.checked;
@@ -970,14 +977,16 @@ END:VCALENDAR`;
             const listElement = document.getElementsByClassName('list')[0];
             const controlBarElement = document.getElementsByClassName('control-bar')[0];
             const settingElement = document.getElementsByClassName('settings-container')[0];
-	    const cardElement = document.getElementsByClassName('event-card')[0];
+	    const cardElement = document.querySelectorAll('.event-card');
 	    const bodyElement = document.getElementsByTagName('body')[0];
             
             calendarElement.style.background = '#222';
             listElement.style.background = '#222';
             controlBarElement.style.background = '#333';
             settingElement.style.background = '#222';
-	    cardElement.style.background = '#333';
+	    cardElement.forEach(element => {
+                element.classList.add('dark-mode');
+            });
 	    bodyElement.style.background = '#222';
         }
         
@@ -986,14 +995,16 @@ END:VCALENDAR`;
             const listElement = document.getElementsByClassName('list')[0];
             const controlBarElement = document.getElementsByClassName('control-bar')[0];
             const settingElement = document.getElementsByClassName('settings-container')[0];
-	    const cardElement = document.getElementsByClassName('event-card')[0];
+	    const cardElement = document.querySelectorAll('.event-card');
 	    const bodyElement = document.getElementsByTagName('body')[0];
             
             calendarElement.style.background = '';
             listElement.style.background = '';
             controlBarElement.style.background = '';
             settingElement.style.background = '';
-	    cardElement.style.background = '';
+	    cardElement.forEach(element => {
+                element.classList.remove('dark-mode');
+            });
 	    bodyElement.style.background = '';
         }
 
