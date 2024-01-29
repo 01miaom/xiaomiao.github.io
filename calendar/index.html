@@ -231,7 +231,7 @@ label {
     color: #666;
 }
 
-select, input, button {
+select, input {
     padding: 8px;
     font-size: 14px;
     border: 1px solid #e91e63;
@@ -304,6 +304,32 @@ input[type="checkbox"]:checked + .toggle::before {
 
 .dark-mode {
     background: #333
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    padding: 24px;
+}
+
+.style-button2 {
+    padding: 15px;
+    font-size: 16px;
+    background-color: #e91e63;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width:30px;
+    position: relative;
+    width: 30vw;
+    margin: 5px;
+    outline: none;
+}
+
+.style-button2:hover {
+    background-color: #d81b60;
 }
     </style>
 <body>
@@ -408,6 +434,13 @@ input[type="checkbox"]:checked + .toggle::before {
                 <option value="23:00">23:00</option>
                 <option value="23:30">23:30</option>
             </select>
+
+	     <div class="button-group">
+                <button id="creative-button" class="style-button2">Creative</button>
+                <button id="work-button" class="style-button2">Work</button>
+                <button id="life-button" class="style-button2">Life</button>
+            </div>
+	
             <div>
               <!----  <label for="repeatWeekly">Repeat Weekly:</label>
                 <input type="checkbox" id="repeatWeekly"> ---->
