@@ -1092,6 +1092,7 @@ END:VCALENDAR`;
             document.getElementsByClassName("calendar")[0].style.display = "none";
             document.getElementsByClassName("list")[0].style.display = "none";
             document.getElementsByClassName("settings-container")[0].style.display = "none";
+	    document.getElementsByClassName("advanced-page")[0].style.display = "block";
         }
         
         
@@ -1099,16 +1100,19 @@ END:VCALENDAR`;
             document.getElementsByClassName("calendar")[0].style.display = "block";
             document.getElementsByClassName("list")[0].style.display = "block";
             document.getElementsByClassName("settings-container")[0].style.display = "none";
+	    document.getElementsByClassName("advanced-page")[0].style.display = "none";
         }
         
         function setting(){
             document.getElementsByClassName("calendar")[0].style.display = "none";
             document.getElementsByClassName("list")[0].style.display = "none";
             document.getElementsByClassName("settings-container")[0].style.display = "block";
+            document.getElementsByClassName("advanced-page")[0].style.display = "none";
             
         }
 
 	document.getElementsByClassName("settings-container")[0].style.display = "none";
+	document.getElementsByClassName("advanced-page")[0].style.display = "none";
 
 	document.getElementById('night-mode').addEventListener('change', function () {
 
