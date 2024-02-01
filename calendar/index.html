@@ -341,6 +341,94 @@ input[type="checkbox"]:checked + .toggle::before {
 .style-button2:hover {
     background-color: #d81b60;
 }
+
+
+#add-project-btn {
+      position: fixed;
+      bottom: 100px;
+      right: 20px;
+      padding: 15px 20px;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #add-project-modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      z-index: 2;
+      border-radius: 8px ;
+      width: 85vw;
+      padding: 30px;
+    }
+
+    .progress-bar {
+      height: 20px;
+      background-color: #e0e0e0;
+      margin-top: 10px;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      background-color: #3498db;
+      width: 0;
+      transition: width 0.5s ease-in-out;
+      border-radius: 5px;
+    }
+
+    .project {
+      margin-top: 20px;
+      background-color: #fff;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    .sub-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .sub-item input {
+      margin-right: 10px;
+      margin-left: 20px;
+    }
+    
+    #project-name {
+        display: flex;
+        margin-bottom: 20px;
+    }
+    
+    .advanced-input {
+        width:30vw;
+        position: relative;
+    }
+    
+    .advanced-button {
+        width:30vw;
+        height: 50px;
+        margin: 0;
+    }
+    #projects-container {
+        margin: 50px;
+    }
+    .advanced-page {
+        background: #fff;
+    }
     </style>
 <body>
 <div class="calendar">
@@ -538,6 +626,29 @@ input[type="checkbox"]:checked + .toggle::before {
         <button id="upload-data">Update</button>
     </div>
 </div>
+
+   <!---- advance  ---->  
+<div class="advanced-page">
+    <button id="add-project-btn" onclick="showAddProjectModal()">Add Project</button>
+
+  <div id="add-project-modal">
+    <div id="project-name">
+    <label for="projectName">Project Name:</label>
+    <input type="text" id="projectName" class="advanced-input">
+      </div>
+    <div id="subItemsContainer">
+      <div class="sub-item">
+        <input type="text" placeholder="Sub-item" class="advanced-input">
+        <button onclick="addSubItem()" class="advanced-button">Add Sub-item</button>
+      </div>
+    </div>
+
+    <button onclick="addProject()" class="advanced-button">Add Project</button>
+  </div>
+
+  <div id="projects-container"></div>  
+    </div>
+	
     </body>
     <script>
         const xValues = Array.from({ length: 31 }, (_, i) => i + 1);
@@ -1074,6 +1185,121 @@ END:VCALENDAR`;
             const nightModeButton = document.getElementById('night-mode');
             nightModeButton.checked = true;
         }
+
+	///////////////////////////////
+
+	 window.onload = function() {
+            var savedProjectsJSON = localStorage.getItem('projects');
+            if (savedProjectsJSON) {
+              var savedProjects = JSON.parse(savedProjectsJSON);
+              document.getElementById('projects-container').innerHTML = savedProjects.html;
+              restoreCheckboxStates(savedProjects.checkboxStates);
+              addCheckboxListeners();
+            }
+          };
+
+          function showAddProjectModal() {
+            document.getElementById('add-project-modal').style.display = 'block';
+          }
+
+          function addSubItem() {
+            var subItemsContainer = document.getElementById('subItemsContainer');
+            var newSubItem = document.createElement('div');
+            newSubItem.className = 'sub-item';
+            newSubItem.innerHTML = '<input type="text" placeholder="Sub-item"><button onclick="addSubItem()">Add Sub-item</button>';
+            subItemsContainer.appendChild(newSubItem);
+          }
+
+          function addProject() {
+            var projectName = document.getElementById('projectName').value;
+            var subItemsContainer = document.getElementById('subItemsContainer');
+            var subItems = subItemsContainer.getElementsByClassName('sub-item');
+
+            var projectContainer = document.getElementById('projects-container');
+            var newProject = document.createElement('div');
+            newProject.className = 'project';
+            newProject.innerHTML = '<h3>' + projectName + '</h3>';
+
+            var progressBarContainer = document.createElement('div');
+            progressBarContainer.className = 'progress-bar';
+            var progressBar = document.createElement('div');
+            progressBar.className = 'progress';
+            progressBarContainer.appendChild(progressBar);
+            newProject.appendChild(progressBarContainer);
+
+            for (var i = 0; i < subItems.length; i++) {
+              var subItemText = subItems[i].getElementsByTagName('input')[0].value;
+              var subItem = document.createElement('div');
+              subItem.className = 'sub-item';
+              subItem.innerHTML = '<input type="checkbox">' + subItemText;
+              newProject.appendChild(subItem);
+            }
+
+            projectContainer.appendChild(newProject);
+
+            document.getElementById('projectName').value = '';
+            subItemsContainer.innerHTML = '<div class="sub-item"><input type="text" placeholder="Sub-item"><button onclick="addSubItem()">Add Sub-item</button></div>';
+            document.getElementById('add-project-modal').style.display = 'none';
+
+            var projectsData = {
+              html: projectContainer.innerHTML,
+              checkboxStates: getCheckboxStates()
+            };
+            localStorage.setItem('projects', JSON.stringify(projectsData));
+
+            addCheckboxListeners();
+          }
+
+          function addCheckboxListeners() {
+            var checkboxes = document.querySelectorAll('.project input[type="checkbox"]');
+            checkboxes.forEach(function(checkbox) {
+              checkbox.addEventListener('change', function() {
+                refreshProgressBar(this);
+                var projectsData = {
+                  html: document.getElementById('projects-container').innerHTML,
+                  checkboxStates: getCheckboxStates()
+                };
+                localStorage.setItem('projects', JSON.stringify(projectsData));
+              });
+            });
+          }
+
+          function restoreCheckboxStates(checkboxStates) {
+            if (checkboxStates) {
+              checkboxStates.forEach(function(state, index) {
+                var checkbox = document.querySelectorAll('.project input[type="checkbox"]')[index];
+                if (checkbox) {
+                  checkbox.checked = state;
+                }
+              });
+            }
+          }
+
+          function getCheckboxStates() {
+            var checkboxes = document.querySelectorAll('.project input[type="checkbox"]');
+            var checkboxStates = [];
+            checkboxes.forEach(function(checkbox) {
+              checkboxStates.push(checkbox.checked);
+            });
+            return checkboxStates;
+          }
+
+          function refreshProgressBar(checkbox) {
+            var project = checkbox.closest('.project');
+            var progressBar = project.querySelector('.progress');
+            var subItems = project.getElementsByClassName('sub-item');
+            var completedSubItems = 0;
+
+            for (var i = 0; i < subItems.length; i++) {
+              var checkbox = subItems[i].getElementsByTagName('input')[0];
+              if (checkbox.checked) {
+                completedSubItems++;
+              }
+            }
+
+            var completionPercentage = (completedSubItems / subItems.length) * 100;
+            progressBar.style.width = completionPercentage + '%';
+          }
 
     </script>
 </html>
