@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <!-- 引入 SheetJS 库 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+  <!-- 使用 ES6 模块导入 webR -->
+  <script type="module">
+    // 注意：导入时使用大写的 WebR
+    import { WebR, ChannelType } from 'https://webr.r-wasm.org/latest/webr.mjs';
+
+    // 初始化 webR 实例
+    const myWebR = new WebR({
+        channeType:  ChannelType.PostMessage,
+    });
+    await myWebR.init();
+
+      
+    // 定义一个函数，用于将前端解析的数据传递给 webR 进行处理
+    async function processData(data) {
+      // 将 JavaScript 对象转换为 JSON 字符串
+      const jsonData = JSON.stringify(data);
+      
+      // 定义 R 脚本，使用 jsonlite 将 JSON 转为数据框，并用 DT 渲染 HTML 表格
+      const rScript = `
+        library(jsonlite)
+        library(DT)
+        
+        # 将 JSON 数据转换为 R 的数据框
+        data <- fromJSON('${jsonData}')
+        
+        # 生成数据摘要（可根据需要调整操作）
+        summary_data <- summary(data)
+        
+        # 使用 DT 包创建交互式 HTML 表格
+        datatable(data)
+      `;
+      
+      // 执行 R 脚本
+      const result = await myWebR.evalR(rScript);
+      // 获取 R 脚本返回的 HTML 内容
+      const output = await result.toHtml();
+      // 将结果插入到页面中
+      document.getElementById('r-output').innerHTML = output;
+    }
+    
+
+    // 处理用户上传文件的函数
+    function handleFile(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        // 将工作表转换为 JSON 格式
+        const json = XLSX.utils.sheet_to_json(worksheet);
+        console.log(json)
+        // 将解析的数据传递给 webR 进行处理
+      //  processData(json);
+      };
+
+      reader.readAsArrayBuffer(file);
+    }
+
+    // 页面加载完成后，添加文件上传事件监听器
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('upload').addEventListener('change', handleFile, false);
+    });
+  </script>
+</head>
+<body>
+  <h1></h1>
+  <input type="file" id="upload" accept=".xlsx" />
+  <div id="r-output"></div>
+</body>
+</html>
